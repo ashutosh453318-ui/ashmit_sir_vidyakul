@@ -37,9 +37,9 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 # --- QUIZ FOLDERS & FILES HIERARCHY ---
 # Yahan se aap kitne bhi chapters add kar sakte hain
 QUIZ_STRUCTURE = {
-    
     "Math": {
-        "Test": "quiz.txt"
+        "Test": "quiz.txt",
+        "Chapter 1": "chapter1.txt"
     }
 }
 
@@ -103,7 +103,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS quiz_state (
             chat_id INTEGER PRIMARY KEY,
             current_index INTEGER DEFAULT 0,
-            subject TEXT DEFAULT 'chemistry_chapter1.txt'
+            subject TEXT DEFAULT 'quiz.txt'
         )
     """)
     conn.commit()
@@ -116,7 +116,7 @@ def get_quiz_state(chat_id):
     result = cursor.fetchone()
     conn.close()
     if result: return result[0], result[1]
-    return 0, 'chemistry_chapter1.txt'
+    return 0, 'quiz.txt'
 
 def update_quiz_state(chat_id, new_index, subject=None):
     conn = get_db_connection()
@@ -173,7 +173,8 @@ def get_top_scorers(chat_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     # Order by points descending, uske baad total duration ascending (kam time wala upar)
-    cursor.execute("SELECT full_name, points, correct_answers, wrong_answers, total_duration FROM scores WHERE chat_id = ? ORDER BY points DESC, total_duration ASC LIMIT 10", (chat_id,))
+    # LIMIT hata diya gaya hai taaki saare students ka result show ho sake
+    cursor.execute("SELECT full_name, points, correct_answers, wrong_answers, total_duration FROM scores WHERE chat_id = ? ORDER BY points DESC, total_duration ASC", (chat_id,))
     rows = cursor.fetchall()
     conn.close()
     return rows
@@ -183,7 +184,7 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
     top_users = get_top_scorers(chat_id)
     total_asked = COMPETITION_STATS.get(chat_id, {}).get('total_asked', 0)
     
-    # Formats file name like "physics_chapter1.txt" -> "PHYSICS CHAPTER1"
+    # Formats file name like "chapter1.txt" -> "CHAPTER1"
     sub_title = file_name.replace(".txt", "").replace("_", " ").upper() if file_name else "QUIZ"
     
     msg = f"🏁 The quiz '{sub_title}' has finished! ({reason})\n\n"
@@ -207,7 +208,7 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
             msg += f"{rank_icon} {name} – <b>{points}</b> ({round(duration, 1)} sec)\n"
             msg += f"   ✅ Sahi: {correct} | ❌ Galat: {wrong} | ⏭️ Skipped: {skipped}\n\n"
             
-        msg += "🏆 Congratulations to the winners!"
+        msg += "🏆 Congratulations to all participants!"
     else:
         msg += "Koi participate nahi kiya. 😔"
         
@@ -249,7 +250,7 @@ def load_questions(file_name):
         logger.error(f"File Error [{file_name}]: {e}")
     return questions
 
-# --- STRICT PERMISSION CHECK (ONLY SANTOSH & Ashmit SIR) ---
+# --- STRICT PERMISSION CHECK ---
 async def is_authorized(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
     user = update.effective_user
     if not user:
@@ -323,7 +324,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,  # Bulb Icon & Text included here
             is_anonymous=False,
-            open_period=15 # 15 Second Timer
+            open_period=60 # CHANGED TO 60 Second Timer
         )
         
         # Save Send Time to Calculate Duration
@@ -349,10 +350,10 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
 
 async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
     await asyncio.sleep(2) # Initial delay before first question
-    reason = "10 Questions Completed! Type /more for next."
+    reason = "50 Questions Completed! Type /more for next." # UPDATE MSG
     try:
-        # Har baar sirf 10 questions poochega
-        for _ in range(10):
+        # Har baar 50 questions poochega
+        for _ in range(50):
             if chat_id not in QUIZ_TASKS:
                 return # User used /stop (manually handled)
                 
@@ -361,11 +362,11 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(17) # Naya interval (15 sec timer + 2 sec extra wait)
+            await asyncio.sleep(62) # Naya interval (60 sec timer + 2 sec extra wait)
     except asyncio.CancelledError:
         return # Task Cancelled
     
-    # Ye block tabhi chalega jab 10 questions poore ho jayenge
+    # Ye block tabhi chalega jab 50 questions poore ho jayenge
     if chat_id in QUIZ_TASKS:
         _, file_name = get_quiz_state(chat_id)
         msg = generate_leaderboard_msg(chat_id, file_name, reason)
@@ -395,12 +396,12 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "👋 Hello! Main <b>Ashmit Sir</b>, aapko Ultimate Quiz Karaoonga.\n\n"
-        "Main aapko <b>Physics</b> aur <b>Chemistry</b> chapters sikhne me madad karunga.\n\n"
+        "👋 Hello! Main <b>Ashmit Sir</b>, aapka Math teacher, aapko Ultimate Quiz Karaoonga.\n\n"
+        "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
         "🔹 /stop - Stop an ongoing quiz\n"
-        "🔹 /more - Agle 10 questions mangwayein\n"
+        "🔹 /more - Agle 50 questions mangwayein\n"
         "🔹 /resetq - Question sequence reset karein\n\n"
         "Niche command pe click karein ya menu se select karein! 🚀"
     )
@@ -419,10 +420,9 @@ async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Is chat mein competition pehle se chal raha hai! Pehle /stop karein.")
         return
 
-    # ONLY PHYSICS AND CHEMISTRY OPTIONS
+    # ONLY MATH OPTIONS
     keyboard = [
-        [InlineKeyboardButton("⚛️ Physics", callback_data="subj_physics")],
-        [InlineKeyboardButton("🧪 Chemistry", callback_data="subj_chemistry")]
+        [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     try:
@@ -445,8 +445,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # CASE 1: MAIN MENU (BACK BUTTON)
     if data == "back_to_main":
         keyboard = [
-            [InlineKeyboardButton("⚛️ Physics", callback_data="subj_physics")],
-            [InlineKeyboardButton("🧪 Chemistry", callback_data="subj_chemistry")]
+            [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text("📚 <b>Choose a Subject to Start Quiz:</b>", reply_markup=reply_markup, parse_mode="HTML")
@@ -454,7 +453,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # CASE 2: SUBJECT SELECTED (SHOW CHAPTERS)
     if data.startswith("subj_"):
-        subject = data.split("_")[1] # e.g., 'physics' or 'chemistry'
+        subject = data.split("_")[1] # e.g., 'Math'
         keyboard = []
         
         # Load chapters from QUIZ_STRUCTURE dynamically
@@ -469,7 +468,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # CASE 3: CHAPTER SELECTED (START THE QUIZ)
     if data.startswith("play_"):
-        file_name = data.split("play_")[1] # e.g., 'chemistry_chapter1.txt'
+        file_name = data.split("play_")[1] # e.g., 'quiz.txt'
         display_sub = file_name.replace(".txt", "").replace("_", " ").title()
         
         reset_scores(chat_id)
@@ -480,7 +479,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Competition naye sire se shuru, Stats Zero kardo
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
-        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 10 Questions ka round\n⚡ Har 15 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
+        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
         
         if chat_id in QUIZ_TASKS:
             QUIZ_TASKS[chat_id].cancel()
@@ -516,7 +515,7 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
     display_sub = file_name.replace(".txt", "").replace("_", " ").title()
-    await update.message.reply_text(f"▶️ Quiz Resume ho raha hai! Topic: {display_sub}\n⚡ Agle 10 sawal aa rahe hain!")
+    await update.message.reply_text(f"▶️ Quiz Resume ho raha hai! Topic: {display_sub}\n⚡ Agle 50 sawal aa rahe hain!")
     
     task = asyncio.create_task(quiz_runner_task(chat_id, context))
     QUIZ_TASKS[chat_id] = task
@@ -544,7 +543,7 @@ async def setup_commands(application: Application):
             BotCommand("start", "Welcome message dekhein"),
             BotCommand("startcomp", "Quiz competition start karein"),
             BotCommand("stop", "Current quiz ko stop karein"),
-            BotCommand("more", "Agle 10 questions mangwayein"),
+            BotCommand("more", "Agle 50 questions mangwayein"),
             BotCommand("resetq", "Question sequence reset karein")
         ]
         await application.bot.set_my_commands(commands)
