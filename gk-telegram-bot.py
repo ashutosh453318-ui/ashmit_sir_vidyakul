@@ -34,7 +34,7 @@ GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 # Group 2 Invite Link aur Passing Marks
 PASSING_MARKS = 70
 # YAHAN APNE DOOSRE GROUP KA LINK DAALNA MAT BHULNA!
-GROUP_2_INVITE_LINK = "https://t.me/+AAPKA_GROUP_2_KA_LINK_YAHAN_DALEIN" 
+GROUP_2_INVITE_LINK = "___" 
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
