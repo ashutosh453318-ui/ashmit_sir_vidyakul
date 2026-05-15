@@ -415,7 +415,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
 
 async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
     await asyncio.sleep(2) 
-    reason = "50 Questions Completed! Type /more for next." 
+    reason = "50 Questions Completed! Type /more ya /resume for next." 
     try:
         for _ in range(50):
             if chat_id not in QUIZ_TASKS:
@@ -470,7 +470,8 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
-        "🔹 /stop - Stop an ongoing quiz\n"
+        "🔹 /stop - Stop an ongoing quiz (Result show hoga)\n"
+        "🔹 /resume - Ruka hua quiz wahi se aage badhayein\n"
         "🔹 /more - Agle 50 questions mangwayein\n"
         "🔹 /resetq - Question sequence reset karein\n\n"
         "Niche command pe click karein ya menu se select karein! 🚀"
@@ -574,7 +575,32 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
     display_sub = file_name.replace(".txt", "").replace("_", " ").title()
-    await update.message.reply_text(f"▶️ Quiz Resume ho raha hai! Topic: {display_sub}\n⚡ Agle 50 sawal aa rahe hain!")
+    await update.message.reply_text(f"▶️ Quiz aage badh raha hai! Topic: {display_sub}\n⚡ Agle 50 sawal aa rahe hain!")
+    
+    task = asyncio.create_task(quiz_runner_task(chat_id, context))
+    QUIZ_TASKS[chat_id] = task
+
+async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Bich me ruka hua quiz wahi se aage badhane ke liye"""
+    if not await is_authorized(update, context):
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+        return
+    chat_id = update.effective_chat.id
+    
+    if chat_id in QUIZ_TASKS:
+        await update.message.reply_text("⚠️ Quiz pehle se chal raha hai! Ise resume karne ki zaroorat nahi hai.")
+        return
+        
+    current_idx, file_name = get_quiz_state(chat_id)
+    if not file_name:
+        await update.message.reply_text("⚠️ Pehle /startcomp use karke koi subject select karein!")
+        return
+        
+    if chat_id not in COMPETITION_STATS:
+        COMPETITION_STATS[chat_id] = {'total_asked': 0}
+        
+    display_sub = file_name.replace(".txt", "").replace("_", " ").title()
+    await update.message.reply_text(f"▶️ Quiz wahi se Resume ho raha hai! Topic: {display_sub}\n⚡ Taiyar ho jao!")
     
     task = asyncio.create_task(quiz_runner_task(chat_id, context))
     QUIZ_TASKS[chat_id] = task
@@ -613,6 +639,7 @@ async def setup_commands(application: Application):
             BotCommand("start", "Welcome message dekhein"),
             BotCommand("startcomp", "Quiz competition start karein"),
             BotCommand("stop", "Current quiz ko stop karein"),
+            BotCommand("resume", "Ruka hua quiz resume karein"),
             BotCommand("more", "Agle 50 questions mangwayein"),
             BotCommand("resetq", "Question sequence reset karein")
         ]
@@ -636,6 +663,7 @@ def main():
     app.add_handler(CommandHandler("start", start_bot))
     app.add_handler(CommandHandler("startcomp", show_quiz_menu)) 
     app.add_handler(CommandHandler("stop", stop_now))
+    app.add_handler(CommandHandler("resume", resume_quiz))
     app.add_handler(CommandHandler("more", more_quiz))
     app.add_handler(CommandHandler("resetq", reset_question_number))
     
