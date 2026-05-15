@@ -322,7 +322,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,  # Bulb Icon & Text included here
             is_anonymous=False,
-            open_period=60 # CHANGED TO 60 Second Timer
+            open_period=8 # CHANGED TO 8 Second Timer
         )
         
         # Save Send Time to Calculate Duration
@@ -360,7 +360,7 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(62) # Naya interval (60 sec timer + 2 sec extra wait)
+            await asyncio.sleep(62) # Naya interval (8 sec timer + 2 sec extra wait)
     except asyncio.CancelledError:
         return # Task Cancelled
     
@@ -477,7 +477,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # Competition naye sire se shuru, Stats Zero kardo
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
-        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
+        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 8 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
         
         if chat_id in QUIZ_TASKS:
             QUIZ_TASKS[chat_id].cancel()
