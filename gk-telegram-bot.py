@@ -274,7 +274,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             await update.message.delete()
             warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, Links allowed nahi hain!")
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)
             await warning.delete()
         except: pass
         return
