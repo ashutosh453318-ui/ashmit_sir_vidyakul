@@ -31,11 +31,15 @@ TOKEN = "8928907436:AAGRk3kWTB_4AHHimsHWr_9dVPdzlD0k_Qs"
 OWNER_ID = 6527942155
 GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 
+# Group 2 Invite Link aur Passing Marks
+PASSING_MARKS = 70
+# YAHAN APNE DOOSRE GROUP KA LINK DAALNA MAT BHULNA!
+GROUP_2_INVITE_LINK = "_" 
+
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
 
 # --- QUIZ FOLDERS & FILES HIERARCHY ---
-# Yahan se aap kitne bhi chapters add kar sakte hain
 QUIZ_STRUCTURE = {
     "Math": {
         "Test": "quiz.txt",
@@ -43,8 +47,8 @@ QUIZ_STRUCTURE = {
 }
 
 ACTIVE_POLLS = {}
-QUIZ_TASKS = {} # Job queue ki jagah apna custom task manager
-COMPETITION_STATS = {} # Competition ke dauran kitne question puche gaye, uska tracker
+QUIZ_TASKS = {} 
+COMPETITION_STATS = {} 
 
 # --- DUMMY WEB SERVER FOR RENDER ---
 class DummyHandler(BaseHTTPRequestHandler):
@@ -67,9 +71,8 @@ def run_dummy_server():
     except Exception as e:
         logger.error(f"Dummy Server Error: {e}")
 
-# --- DATABASE SETUP (With Timeout Fix for Concurrency) ---
+# --- DATABASE SETUP ---
 def get_db_connection():
-    # Timeout 10 seconds add kiya gaya hai taaki Database Lock hone par bot freeze na ho
     return sqlite3.connect("quiz_scores.db", timeout=10)
 
 def init_db():
@@ -85,16 +88,12 @@ def init_db():
             PRIMARY KEY (chat_id, user_id)
         )
     """)
-    # Naye columns add karne ki koshish (Updates for stats)
     try: cursor.execute("ALTER TABLE scores ADD COLUMN last_time REAL DEFAULT 0")
     except sqlite3.OperationalError: pass
-    
     try: cursor.execute("ALTER TABLE scores ADD COLUMN correct_answers INTEGER DEFAULT 0")
     except sqlite3.OperationalError: pass
-    
     try: cursor.execute("ALTER TABLE scores ADD COLUMN wrong_answers INTEGER DEFAULT 0")
     except sqlite3.OperationalError: pass
-    
     try: cursor.execute("ALTER TABLE scores ADD COLUMN total_duration REAL DEFAULT 0.0")
     except sqlite3.OperationalError: pass
 
@@ -138,7 +137,6 @@ def reset_scores(chat_id):
     conn.close()
 
 def record_answer(chat_id, user_id, full_name, is_correct, duration):
-    """User ka answer aur duration record karta hai"""
     conn = get_db_connection()
     cursor = conn.cursor()
     current_time = time.time()
@@ -146,6 +144,7 @@ def record_answer(chat_id, user_id, full_name, is_correct, duration):
     cursor.execute("SELECT points, correct_answers, wrong_answers, total_duration FROM scores WHERE chat_id = ? AND user_id = ?", (chat_id, user_id))
     data = cursor.fetchone()
     
+    # RULE: 2 marks for correct, 0 for wrong (no negative marking)
     points_to_add = 2 if is_correct else 0
     corr_add = 1 if is_correct else 0
     wrong_add = 0 if is_correct else 1
@@ -171,23 +170,47 @@ def record_answer(chat_id, user_id, full_name, is_correct, duration):
 def get_top_scorers(chat_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Order by points descending, uske baad total duration ascending (kam time wala upar)
-    # LIMIT hata diya gaya hai taaki saare students ka result show ho sake
-    cursor.execute("SELECT full_name, points, correct_answers, wrong_answers, total_duration FROM scores WHERE chat_id = ? ORDER BY points DESC, total_duration ASC", (chat_id,))
+    cursor.execute("SELECT full_name, points, correct_answers, wrong_answers, total_duration, user_id FROM scores WHERE chat_id = ? ORDER BY points DESC, total_duration ASC", (chat_id,))
     rows = cursor.fetchall()
     conn.close()
     return rows
 
-# --- LEADERBOARD FORMATTER ---
+# --- LONG MESSAGE HANDLER (TELEGRAM LIMIT FIX - 1020 CHARS) ---
+async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, parse_mode="HTML"):
+    """
+    Agar message bahut lamba ho (limit 1020 chars jo aapne request ki), 
+    toh ye automatically lines me split karke bar-bar me send kar dega taaki error na aaye.
+    """
+    max_length = 1020 # Aapki di gayi limit
+    if len(text) <= max_length:
+        await context.bot.send_message(chat_id, text, parse_mode=parse_mode)
+        return
+
+    lines = text.split('\n')
+    current_msg = ""
+    
+    for line in lines:
+        if len(current_msg) + len(line) + 1 > max_length:
+            if current_msg.strip():
+                await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode)
+            current_msg = line + "\n"
+            await asyncio.sleep(1) # Flood control
+        else:
+            current_msg += line + "\n"
+            
+    if current_msg.strip():
+        await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode)
+
+# --- LEADERBOARD FORMATTER (ALL STUDENTS - LIST 1) ---
 def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
     top_users = get_top_scorers(chat_id)
     total_asked = COMPETITION_STATS.get(chat_id, {}).get('total_asked', 0)
     
-    # Formats file name like "chapter1.txt" -> "CHAPTER1"
     sub_title = file_name.replace(".txt", "").replace("_", " ").upper() if file_name else "QUIZ"
     
-    msg = f"🏁 The quiz '{sub_title}' has finished! ({reason})\n\n"
-    msg += f"<i>{total_asked} questions answered</i>\n\n"
+    msg = f"🏁 <b>The quiz '{sub_title}' has finished! ({reason})</b>\n\n"
+    msg += f"<i>{total_asked} questions answered (Max Marks: {total_asked * 2})</i>\n\n"
+    msg += "🏆 <b>ALL STUDENTS RESULT:</b>\n\n"
     
     if top_users:
         medals = ["🥇", "🥈", "🥉"]
@@ -199,19 +222,76 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
             duration = row[4] or 0.0
             
             skipped = total_asked - (correct + wrong)
-            if skipped < 0: skipped = 0 # Safety check
+            if skipped < 0: skipped = 0 
             
             rank_icon = medals[idx] if idx < 3 else f"<b>{idx+1}.</b>"
             
-            # Format: 🥇 Name - 4 (12.5 sec)
-            msg += f"{rank_icon} {name} – <b>{points}</b> ({round(duration, 1)} sec)\n"
+            msg += f"{rank_icon} {name} – <b>{points} Marks</b> ({round(duration, 1)} sec)\n"
             msg += f"   ✅ Sahi: {correct} | ❌ Galat: {wrong} | ⏭️ Skipped: {skipped}\n\n"
             
-        msg += "🏆 Congratulations to all participants!"
     else:
         msg += "Koi participate nahi kiya. 😔"
         
     return msg
+
+# --- SCORE ENFORCEMENT (70+ AND 70- LISTS - LIST 2 & LIST 3) ---
+async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        chat = await context.bot.get_chat(chat_id)
+        if chat.type == 'private':
+            return
+    except Exception as e:
+        logger.error(f"Chat error: {e}")
+        return
+
+    users = get_top_scorers(chat_id)
+    
+    if not users:
+        return # Koi khelega nahi toh ye list nahi aayegi
+        
+    passed_users = []
+    failed_users = []
+    
+    for row in users:
+        name = row[0]
+        points = row[1] or 0
+        user_id = row[5]
+            
+        if points >= PASSING_MARKS:
+            passed_users.append((user_id, name, points))
+        else:
+            failed_users.append((user_id, name, points))
+            
+    # --- LIST 2: SAFE (70+ Marks) ---
+    msg_safe = "✅ <b>PASSED (70+ Marks) - Safe List:</b>\n\n"
+    if passed_users:
+        for uid, name, pts in passed_users:
+            msg_safe += f"🔹 {name} - {pts} Marks\n"
+    else:
+        msg_safe += "Koi bhi pass nahi hua 😔\n"
+    
+    try:
+        await send_long_message(chat_id, msg_safe, context)
+        await asyncio.sleep(1) # Thoda delay message sequence maintain karne ke liye
+    except Exception as e:
+        logger.error(f"Failed to send safe list: {e}")
+
+    # --- LIST 3: FAILED (<70 Marks) AND PUNISHMENT ---
+    msg_fail = "❌ <b>FAILED (< 70 Marks) - Punishment List:</b>\n\n"
+    if failed_users:
+        for uid, name, pts in failed_users:
+            msg_fail += f"🔸 {name} - {pts} Marks\n"
+            
+        msg_fail += f"\n⚠️ <b>SECOND CHANCE WARNING:</b>\n"
+        msg_fail += f"Jo students fail hue hain, unko punishment ke roop mein niche diye gaye Group ko join karna padega (Koi auto-kick nahi hoga):\n\n"
+        msg_fail += f"🔗 <b>Group 2 Link:</b> {GROUP_2_INVITE_LINK}\n"
+    else:
+        msg_fail += "Koi fail nahi hua! Sab safe hain 🎉\n"
+    
+    try:
+        await send_long_message(chat_id, msg_fail, context)
+    except Exception as e:
+        logger.error(f"Failed to send punishment msg: {e}")
 
 # --- FILE SETUP & READING ---
 def create_dummy_files_if_not_exist():
@@ -255,11 +335,9 @@ async def is_authorized(update: Update, context: ContextTypes.DEFAULT_TYPE) -> b
     if not user:
         return False
         
-    # Check by ID (____) or Username (Ashmit Sir)
     if user.id == OWNER_ID or (user.username and user.username.lower() == GYANENDRA_SIR_USERNAME.lower()):
         return True
         
-    # Agar inme se koi nahi hai toh seedha False
     return False
 
 # --- MODERATION LOGIC ---
@@ -274,7 +352,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             await update.message.delete()
             warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, Links allowed nahi hain!")
-            await asyncio.sleep(5)
+            await asyncio.sleep(1)
             await warning.delete()
         except: pass
         return
@@ -296,7 +374,6 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
         await context.bot.send_message(chat_id, f"⚠️ '{file_name}' file khali hai ya galat format mein hai!")
         return False
 
-    # Agar questions khatam ho gaye toh FALSE return karo
     if current_idx >= len(questions):
         return False
     
@@ -307,11 +384,9 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
         q_num = current_idx + 1
         sub_title = file_name.replace(".txt", "").replace("_", " ").title()
         
-        # --- EXPLANATION (BULB ICON) GENERATOR ---
         correct_ans_text = question_data['options'][question_data['correct']]
         explanation_text = (
             f"✅ Sahi Jawab: {correct_ans_text}\n\n"
-           
         )
         
         message = await context.bot.send_poll(
@@ -320,12 +395,11 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             options=question_data['options'],
             type=Poll.QUIZ,
             correct_option_id=question_data['correct'],
-            explanation=explanation_text,  # Bulb Icon & Text included here
+            explanation=explanation_text,
             is_anonymous=False,
             open_period=60 # CHANGED TO 60 Second Timer
         )
         
-        # Save Send Time to Calculate Duration
         ACTIVE_POLLS[message.poll.id] = {
             'correct': question_data['correct'], 
             'chat_id': chat_id,
@@ -333,7 +407,6 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
         }
         update_quiz_state(chat_id, current_idx + 1, file_name)
         
-        # Total Asked Questions increment karo
         if chat_id not in COMPETITION_STATS:
             COMPETITION_STATS[chat_id] = {'total_asked': 0}
         COMPETITION_STATS[chat_id]['total_asked'] += 1
@@ -347,28 +420,34 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
         return True 
 
 async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
-    await asyncio.sleep(2) # Initial delay before first question
-    reason = "50 Questions Completed! Type /more for next." # UPDATE MSG
+    await asyncio.sleep(2) 
+    reason = "50 Questions Completed! Type /more for next." 
     try:
-        # Har baar 50 questions poochega
         for _ in range(50):
             if chat_id not in QUIZ_TASKS:
-                return # User used /stop (manually handled)
+                return 
                 
             is_running = await send_sequential_quiz(context, chat_id)
             if not is_running:
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(62) # Naya interval (60 sec timer + 2 sec extra wait)
+            # 62 SECONDS (60 sec poll timer + 2 sec gap)
+            await asyncio.sleep(62) 
     except asyncio.CancelledError:
-        return # Task Cancelled
+        return 
     
-    # Ye block tabhi chalega jab 50 questions poore ho jayenge
     if chat_id in QUIZ_TASKS:
         _, file_name = get_quiz_state(chat_id)
-        msg = generate_leaderboard_msg(chat_id, file_name, reason)
-        await context.bot.send_message(chat_id, msg, parse_mode="HTML")
+        
+        # 1. SEND ALL STUDENTS LIST (LIST 1)
+        all_msg = generate_leaderboard_msg(chat_id, file_name, reason)
+        await send_long_message(chat_id, all_msg, context)
+        
+        # 2 & 3. SEND 70+ AND 70- LISTS (LIST 2 AND LIST 3)
+        await enforce_score_rules(chat_id, context)
+        
+        # Free quiz queue
         del QUIZ_TASKS[chat_id]
 
 async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -384,7 +463,6 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
         chat_id = poll_info['chat_id']
         sent_time = poll_info.get('sent_time', time.time())
         
-        # Calculate Time Taken
         duration = time.time() - sent_time
         if duration < 0: duration = 0.1
         
@@ -418,7 +496,6 @@ async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Is chat mein competition pehle se chal raha hai! Pehle /stop karein.")
         return
 
-    # ONLY MATH OPTIONS
     keyboard = [
         [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
     ]
@@ -432,7 +509,6 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer() 
     
-    # Authorized checks for inline buttons
     if not await is_authorized(update, context):
         await query.answer("🚫 Warning: Keval  Ashmit Sir hi ise use kar sakte hain!", show_alert=True)
         return
@@ -440,7 +516,6 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = query.data
     chat_id = query.message.chat_id
     
-    # CASE 1: MAIN MENU (BACK BUTTON)
     if data == "back_to_main":
         keyboard = [
             [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
@@ -449,12 +524,10 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text("📚 <b>Choose a Subject to Start Quiz:</b>", reply_markup=reply_markup, parse_mode="HTML")
         return
 
-    # CASE 2: SUBJECT SELECTED (SHOW CHAPTERS)
     if data.startswith("subj_"):
-        subject = data.split("_")[1] # e.g., 'Math'
+        subject = data.split("_")[1] 
         keyboard = []
         
-        # Load chapters from QUIZ_STRUCTURE dynamically
         if subject in QUIZ_STRUCTURE:
             for chap_name, file_name in QUIZ_STRUCTURE[subject].items():
                 keyboard.append([InlineKeyboardButton(f"📂 {chap_name}", callback_data=f"play_{file_name}")])
@@ -464,20 +537,15 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(f"📘 <b>{subject.capitalize()}</b> ke chapters:\nSelect a chapter to start:", reply_markup=reply_markup, parse_mode="HTML")
         return
 
-    # CASE 3: CHAPTER SELECTED (START THE QUIZ)
     if data.startswith("play_"):
-        file_name = data.split("play_")[1] # e.g., 'quiz.txt'
+        file_name = data.split("play_")[1] 
         display_sub = file_name.replace(".txt", "").replace("_", " ").title()
         
         reset_scores(chat_id)
-        
-        # Hamesha question index 0 se start hoga jab naya chapter start hoga
         update_quiz_state(chat_id, 0, file_name)
-        
-        # Competition naye sire se shuru, Stats Zero kardo
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
-        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
+        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n⚠️ Jo < 70 marks layega unhe punishment ke liye group 2 bheja jayega!\n\nTaiyar ho jao! 🏁")
         
         if chat_id in QUIZ_TASKS:
             QUIZ_TASKS[chat_id].cancel()
@@ -508,7 +576,6 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Pehle /startcomp use karke koi subject aur chapter select karein!")
         return
         
-    # Stats track karne ke liye, taaki purana leaderboard merge ho jaye
     if chat_id not in COMPETITION_STATS:
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
@@ -532,8 +599,13 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     del QUIZ_TASKS[chat_id]
     
     _, file_name = get_quiz_state(chat_id)
-    msg = generate_leaderboard_msg(chat_id, file_name, "Manually Stopped")
-    await update.message.reply_text(msg, parse_mode="HTML")
+    
+    # 1. SEND ALL STUDENTS LIST (LIST 1)
+    all_msg = generate_leaderboard_msg(chat_id, file_name, "Manually Stopped")
+    await send_long_message(chat_id, all_msg, context)
+    
+    # 2 & 3. SEND 70+ AND 70- LISTS (LIST 2 AND LIST 3)
+    await enforce_score_rules(chat_id, context)
 
 async def setup_commands(application: Application):
     try:
@@ -553,7 +625,7 @@ def main():
     threading.Thread(target=run_dummy_server, daemon=True).start()
 
     init_db()
-    create_dummy_files_if_not_exist() # Yeh function Ensure karega ki files miss na hon!
+    create_dummy_files_if_not_exist() 
     
     logger.info("Bot Live! With Strict User Authorization.")
     
@@ -571,7 +643,6 @@ def main():
 
     logger.info("✅ Bot is now polling messages...")
     
-    # FIX FOR PYTHON 3.14+ Event Loop Error
     try:
         loop = asyncio.get_event_loop()
     except RuntimeError:
