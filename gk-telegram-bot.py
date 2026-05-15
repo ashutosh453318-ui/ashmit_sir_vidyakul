@@ -322,7 +322,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,  # Bulb Icon & Text included here
             is_anonymous=False,
-            open_period=60 # CHANGED TO 60 Second Timer
+            open_period=8 # CHANGED TO 60 Second Timer
         )
         
         # Save Send Time to Calculate Duration
