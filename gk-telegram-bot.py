@@ -339,7 +339,7 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
         for uid, name, pts in passed_users:
             msg_safe += f"🔹 {name} - {pts} Marks\n"
             
-        msg_safe += f"\n🎯 <i>Niche diye gaye 'Join Target 100 Group' button pe click karein. (Sirf 70+ walo ko hi link milega!)</i>\n"
+        msg_safe += f"\n🎯 <i>Niche diye gaye 'Join Target 100 Group' button pe click karein. (Sirf 70+ walo ko hi link DM me milega!)</i>\n"
     else:
         msg_safe += "Koi bhi pass nahi hua 😔\n"
     
@@ -643,12 +643,15 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if row:
             points = row[0]
             if points >= PASSING_MARKS or user_id == OWNER_ID:
-                await query.answer("✅ Aap eligible hain! Group me link dekhein.", show_alert=False)
-                await context.bot.send_message(
-                    chat_id=chat_id,
-                    text=f"🎉 Congratulations {query.from_user.mention_html()}!\n\nAap 'Target 100' group ke liye eligible hain.\n🔗 <b>Join here:</b> {TARGET_100_LINK}",
-                    parse_mode="HTML"
-                )
+                try:
+                    await context.bot.send_message(
+                        chat_id=user_id,
+                        text=f"🎉 Congratulations {query.from_user.first_name}!\n\nAap 'Target 100' group ke liye eligible hain.\n🔗 <b>Join here:</b> {TARGET_100_LINK}",
+                        parse_mode="HTML"
+                    )
+                    await query.answer("✅ Aapko Private Message (Inbox) me link bhej diya gaya hai. Wahan se join karein!", show_alert=True)
+                except Exception:
+                    await query.answer("⚠️ Link bhejne me error! Pehle bot ko private me jaakar /start press karein, tabhi bot aapko link bhej payega.", show_alert=True)
             else:
                 await query.answer("❌ Sorry you are not eligible. 70+ marks required.", show_alert=True)
         else:
