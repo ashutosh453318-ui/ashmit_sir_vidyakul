@@ -33,7 +33,6 @@ GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 
 # --- GROUPS & MARKS SETTINGS ---
 PASSING_MARKS = 70
-# Target 100 Group Link (70+ walon ke liye - Button click par DM me jayega)
 TARGET_100_LINK = "https://t.me/+7pQr2uUgs2llMTc1"
 
 # Spam Words
@@ -49,6 +48,79 @@ QUIZ_STRUCTURE = {
 ACTIVE_POLLS = {}
 QUIZ_TASKS = {} 
 COMPETITION_STATS = {} 
+
+# --- RESTORE DATA LIST (To recover lost results) ---
+RESTORE_DATA = [
+    ("Anjali Kumari", 98, 49, 1, 0, 1069.4),
+    ("Rituraj Raj", 92, 46, 4, 0, 1132.9),
+    ("Ankit Jha", 92, 46, 4, 0, 1161.1),
+    ("Santosh Kumar", 90, 45, 5, 0, 412.8),
+    ("Ayan", 90, 45, 4, 1, 793.6),
+    ("Anshu Kumar", 90, 45, 3, 2, 802.3),
+    ("Saniya Singh", 90, 45, 5, 0, 830.6),
+    ("Manish Yaduvanshi", 90, 45, 2, 3, 1196.0),
+    ("Prince Sharma", 90, 45, 4, 1, 1199.3),
+    ("Sippu Kumar", 88, 44, 5, 1, 816.7),
+    ("Supriya Kumari", 88, 44, 3, 3, 942.8),
+    ("Rinki Kumari", 88, 44, 5, 1, 1092.9),
+    ("Ayushi@AS", 86, 43, 6, 1, 1112.7),
+    ("Arjun Yadav", 84, 42, 2, 6, 893.7),
+    ("࿐🅰🅼🅸🆃𒆜࿐ Kumar࿐", 84, 42, 6, 2, 1184.9),
+    ("Rohit Raj", 82, 41, 9, 0, 746.9),
+    ("YASHWANT Kushwaha", 82, 41, 7, 2, 828.2),
+    ("Shalini Priya", 82, 41, 9, 0, 902.5),
+    ("Abhii", 82, 41, 9, 0, 1278.5),
+    ("Pallavi Kumari", 82, 41, 8, 1, 1448.6),
+    ("Anjali Mishra", 82, 41, 9, 0, 1496.3),
+    ("Riya Singh", 80, 40, 5, 5, 1107.6),
+    ("SwarnkarShubh98¿♤", 80, 40, 10, 0, 1118.8),
+    ("Md Albab", 80, 40, 7, 3, 1124.5),
+    ("Mr.Aniket", 80, 40, 10, 0, 1492.7),
+    ("Class12th Student", 78, 39, 11, 0, 652.4),
+    ("Shahnawaz Alam", 78, 39, 10, 1, 804.9),
+    ("Abhi yadav", 78, 39, 8, 3, 971.6),
+    ("Z", 78, 39, 11, 0, 1196.9),
+    ("➠✞𝆺𝅥⃝ᵛ͢ᵎᵖ≛⃝kash ⑅⃝king☜⃝", 78, 39, 10, 1, 1261.2),
+    ("Sonu Kumar", 76, 38, 11, 1, 801.6),
+    ("Rishu Kumar", 76, 38, 9, 3, 1453.8),
+    ("Deepak Yadav o7", 74, 37, 10, 3, 802.5),
+    ("Ravish das", 74, 37, 11, 2, 1166.1),
+    ("Mr_AñKûSh__", 74, 37, 11, 2, 1288.0),
+    ("Deepa kumari", 72, 36, 14, 0, 954.6),
+    ("Aditya Ray", 72, 36, 3, 11, 1731.4),
+    ("Yuvraj Kumar", 70, 35, 8, 7, 1019.8),
+    ("Adi Singh !!", 70, 35, 13, 2, 1131.6),
+    ("Arun Chaubey", 68, 34, 13, 3, 1261.5),
+    ("Shivam Yadav", 66, 33, 16, 1, 1293.7),
+    ("Aanya", 66, 33, 13, 4, 1310.4),
+    ("Kanhaiya Sharma", 66, 33, 17, 0, 1497.3),
+    ("Rahul Kumar", 64, 32, 2, 16, 772.4),
+    ("Shailesh", 64, 32, 18, 0, 1269.3),
+    ("Pihu Singh", 64, 32, 15, 3, 1436.8),
+    ("*_*VIVEK---SINGH*_*", 64, 32, 10, 8, 1555.2),
+    ("Bahura Sahu", 64, 32, 17, 1, 1573.0),
+    ("Jyoti", 62, 31, 16, 3, 1446.9),
+    ("Rinku Kumari", 60, 30, 19, 1, 1428.7),
+    ("Ujjwal bhardwaj", 58, 29, 13, 8, 1089.5),
+    ("Abhimanyu Kumar", 58, 29, 19, 2, 1474.3),
+    ("𝗦𝗨𝗡𝗗𝗥𝗔𝗠 𝗬𝗔𝗗𝗔𝗩", 56, 28, 21, 1, 634.7),
+    ("@455kavya", 56, 28, 16, 6, 865.4),
+    ("@Lalit Kumar", 56, 28, 18, 4, 887.9),
+    ("Muskan Rawat", 56, 28, 19, 3, 1267.7),
+    ("Gaurav Kumar", 54, 27, 8, 15, 486.5),
+    ("Manish yadav", 54, 27, 5, 18, 797.6),
+    ("Aatika Anjoom", 54, 27, 21, 2, 1368.2),
+    ("Rahul Kumar 2", 52, 26, 16, 8, 870.5), 
+    ("Riya Mishra", 52, 26, 19, 5, 1383.2),
+    ("Palak", 50, 25, 20, 5, 1222.3),
+    ("M..Thakur", 50, 25, 21, 4, 1238.6),
+    ("Jyoti sinha", 48, 24, 24, 2, 1359.9),
+    ("Balaghul Mobin Balaghul", 46, 23, 25, 2, 549.5),
+    ("Riya Thakur", 46, 23, 12, 15, 588.6),
+    ("Pooja Pooja", 46, 23, 16, 11, 1039.4),
+    ("Sejal Singh", 46, 23, 12, 15, 1089.3),
+    ("Aayush", 46, 23, 15, 12, 1230.4)
+]
 
 # --- DUMMY WEB SERVER FOR RENDER ---
 class DummyHandler(BaseHTTPRequestHandler):
@@ -104,28 +176,36 @@ def init_db():
             subject TEXT DEFAULT 'quiz.txt'
         )
     """)
+    try: cursor.execute("ALTER TABLE quiz_state ADD COLUMN total_asked INTEGER DEFAULT 0")
+    except sqlite3.OperationalError: pass
+
     conn.commit()
     conn.close()
 
 def get_quiz_state(chat_id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT current_index, subject FROM quiz_state WHERE chat_id = ?", (chat_id,))
+    cursor.execute("SELECT current_index, subject, total_asked FROM quiz_state WHERE chat_id = ?", (chat_id,))
     result = cursor.fetchone()
     conn.close()
-    if result: return result[0], result[1]
-    return 0, 'quiz.txt'
+    if result: 
+        return result[0], result[1], (result[2] if len(result)>2 and result[2] is not None else 0)
+    return 0, 'quiz.txt', 0
 
-def update_quiz_state(chat_id, new_index, subject=None):
+def update_quiz_state(chat_id, new_index, subject=None, total_asked=None):
     conn = get_db_connection()
     cursor = conn.cursor()
+    curr_idx, curr_subj, curr_asked = get_quiz_state(chat_id)
     if subject is None:
-        _, subject = get_quiz_state(chat_id)
+        subject = curr_subj
+    if total_asked is None:
+        total_asked = curr_asked
+
     cursor.execute("""
-        INSERT INTO quiz_state (chat_id, current_index, subject) 
-        VALUES (?, ?, ?) 
-        ON CONFLICT(chat_id) DO UPDATE SET current_index = ?, subject = ?
-    """, (chat_id, new_index, subject, new_index, subject))
+        INSERT INTO quiz_state (chat_id, current_index, subject, total_asked) 
+        VALUES (?, ?, ?, ?) 
+        ON CONFLICT(chat_id) DO UPDATE SET current_index = ?, subject = ?, total_asked = ?
+    """, (chat_id, new_index, subject, total_asked, new_index, subject, total_asked))
     conn.commit()
     conn.close()
 
@@ -195,13 +275,12 @@ async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, p
             current_msg += line + "\n"
             
     if current_msg.strip():
-        # Last message mein reply markup (button) jodna
         await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode, reply_markup=reply_markup)
 
 # --- LEADERBOARD FORMATTER (ALL STUDENTS - LIST 1) ---
 def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
     top_users = get_top_scorers(chat_id)
-    total_asked = COMPETITION_STATS.get(chat_id, {}).get('total_asked', 0)
+    _, _, total_asked = get_quiz_state(chat_id)
     
     sub_title = file_name.replace(".txt", "").replace("_", " ").upper() if file_name else "QUIZ"
     
@@ -260,7 +339,7 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
         for uid, name, pts in passed_users:
             msg_safe += f"🔹 {name} - {pts} Marks\n"
             
-        msg_safe += f"\n🎯 <i>Niche diye gaye 'Join Now' button pe click karein. (Agar aapke 70+ marks hain tabhi link milega!)</i>\n"
+        msg_safe += f"\n🎯 <i>Niche diye gaye 'Join Target 100 Group' button pe click karein. (Sirf 70+ walo ko hi link milega!)</i>\n"
     else:
         msg_safe += "Koi bhi pass nahi hua 😔\n"
     
@@ -363,7 +442,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # --- CUSTOM QUIZ RUNNER ---
 async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int) -> bool:
-    current_idx, file_name = get_quiz_state(chat_id)
+    current_idx, file_name, total_asked = get_quiz_state(chat_id)
     questions = load_questions(file_name)
     
     if not questions:
@@ -401,18 +480,14 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             'chat_id': chat_id,
             'sent_time': time.time()
         }
-        update_quiz_state(chat_id, current_idx + 1, file_name)
-        
-        if chat_id not in COMPETITION_STATS:
-            COMPETITION_STATS[chat_id] = {'total_asked': 0}
-        COMPETITION_STATS[chat_id]['total_asked'] += 1
+        update_quiz_state(chat_id, current_idx + 1, file_name, total_asked + 1)
         
         return True
         
     except Exception as e:
         logger.error(f"Quiz Error in Chat {chat_id}: {e}")
         await context.bot.send_message(chat_id, f"⚠️ Question bhejne mein dikkat aayi (Error: {e}). \nPoll option 100 character se chota hona chahiye.")
-        update_quiz_state(chat_id, current_idx + 1, file_name) 
+        update_quiz_state(chat_id, current_idx + 1, file_name, total_asked) 
         return True 
 
 async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
@@ -433,7 +508,7 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
         return 
     
     if chat_id in QUIZ_TASKS:
-        _, file_name = get_quiz_state(chat_id)
+        _, file_name, _ = get_quiz_state(chat_id)
         
         all_msg = generate_leaderboard_msg(chat_id, file_name, reason)
         await send_long_message(chat_id, all_msg, context)
@@ -472,10 +547,11 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
-        "🔹 /stop - Stop an ongoing quiz (Result show hoga)\n"
+        "🔹 /stop - Stop an ongoing quiz\n"
         "🔹 /resume - Ruka hua quiz wahi se aage badhayein\n"
-        "🔹 /more - Agle 50 questions mangwayein\n"
         "🔹 /result - Sabhi students ka Result dobara show karein\n"
+        "🔹 /more - Agle 50 questions mangwayein\n"
+        "🔹 /restore - Apna lost live test data wapas laane ke liye (Very Important)\n"
         "🔹 /resetq - Question sequence reset karein\n\n"
         "Niche command pe click karein ya menu se select karein! 🚀"
     )
@@ -483,6 +559,36 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(welcome_message, parse_mode="HTML")
     except Exception as e:
         logger.error(f"Start CMD error: {e}")
+
+async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Render ke server restart hone par agar live test delete ho jaye toh recovery ke liye"""
+    if not await is_authorized(update, context):
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+        return
+        
+    chat_id = update.effective_chat.id
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Clear old
+    cursor.execute("DELETE FROM scores WHERE chat_id = ?", (chat_id,))
+    
+    # Restore the saved list
+    for idx, item in enumerate(RESTORE_DATA):
+        # Assign a fake temporary negative user_id 
+        fake_uid = -1000 - idx
+        cursor.execute("""
+            INSERT INTO scores (chat_id, user_id, full_name, points, correct_answers, wrong_answers, total_duration) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (chat_id, fake_uid, item[0].strip(), item[1], item[2], item[3], item[5]))
+    
+    conn.commit()
+    conn.close()
+    
+    update_quiz_state(chat_id, 50, 'quiz.txt', 50)
+    COMPETITION_STATS[chat_id] = {'total_asked': 50}
+    
+    await update.message.reply_text("✅ Recovery Success! Pichla Data Restore ho gaya hai.\nAb aap /result command use karke apna result dekh sakte hain.")
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
@@ -511,27 +617,42 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     chat_id = query.message.chat_id
     user_id = query.from_user.id
     
-    # --- JOIN TARGET 100 BUTTON LOGIC ---
+    # --- JOIN TARGET 100 BUTTON LOGIC (WITH ELIGIBILITY) ---
     if data == "join_target_100":
-        # Check eligibility
         conn = get_db_connection()
         cursor = conn.cursor()
+        
+        # 1. Pehle proper user_id se match karenge
         cursor.execute("SELECT points FROM scores WHERE chat_id = ? AND user_id = ?", (chat_id, user_id))
         row = cursor.fetchone()
+        
+        # 2. Agar na mile (kyunki humne /restore use kiya tha fake id se), to Name se match karenge EXACTLY
+        if not row:
+            full_name_clean = query.from_user.full_name.strip()
+            if full_name_clean:
+                # Exact Name match karne par recovery data update kar denge
+                cursor.execute("SELECT points, user_id FROM scores WHERE chat_id = ? AND full_name = ?", (chat_id, full_name_clean))
+                row_by_name = cursor.fetchone()
+                if row_by_name:
+                    row = (row_by_name[0],)
+                    fake_uid = row_by_name[1]
+                    cursor.execute("UPDATE scores SET user_id = ? WHERE chat_id = ? AND user_id = ?", (user_id, chat_id, fake_uid))
+                    conn.commit()
         conn.close()
         
         if row:
             points = row[0]
             if points >= PASSING_MARKS or user_id == OWNER_ID:
-                try:
-                    await context.bot.send_message(user_id, f"🎉 Congratulations! Aap eligible hain.\n\n🔗 Target 100 Group Link: {TARGET_100_LINK}")
-                    await query.answer("✅ Aapko private message (DM) mein link bhej diya gaya hai!", show_alert=True)
-                except Exception:
-                    await query.answer("⚠️ Link bhejne me error! Pehle bot ko private me start karein.", show_alert=True)
+                await query.answer("✅ Aap eligible hain! Group me link dekhein.", show_alert=False)
+                await context.bot.send_message(
+                    chat_id=chat_id,
+                    text=f"🎉 Congratulations {query.from_user.mention_html()}!\n\nAap 'Target 100' group ke liye eligible hain.\n🔗 <b>Join here:</b> {TARGET_100_LINK}",
+                    parse_mode="HTML"
+                )
             else:
                 await query.answer("❌ Sorry you are not eligible. 70+ marks required.", show_alert=True)
         else:
-            await query.answer("❌ Aapne is quiz me hissa nahi liya hai.", show_alert=True)
+            await query.answer("❌ Aapne is quiz me hissa nahi liya hai. Only participants allowed!", show_alert=True)
         return
 
     # Authorized checks for other inline buttons
@@ -565,8 +686,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         display_sub = file_name.replace(".txt", "").replace("_", " ").title()
         
         reset_scores(chat_id)
-        update_quiz_state(chat_id, 0, file_name)
-        COMPETITION_STATS[chat_id] = {'total_asked': 0}
+        update_quiz_state(chat_id, 0, file_name, 0)
         
         await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
         
@@ -594,13 +714,10 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Quiz pehle se chal raha hai!")
         return
         
-    current_idx, file_name = get_quiz_state(chat_id)
+    current_idx, file_name, _ = get_quiz_state(chat_id)
     if not file_name or file_name == 'gk':
         await update.message.reply_text("⚠️ Pehle /startcomp use karke koi subject aur chapter select karein!")
         return
-        
-    if chat_id not in COMPETITION_STATS:
-        COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
     display_sub = file_name.replace(".txt", "").replace("_", " ").title()
     await update.message.reply_text(f"▶️ Quiz aage badh raha hai! Topic: {display_sub}\n⚡ Agle 50 sawal aa rahe hain!")
@@ -619,13 +736,10 @@ async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Quiz pehle se chal raha hai! Ise resume karne ki zaroorat nahi hai.")
         return
         
-    current_idx, file_name = get_quiz_state(chat_id)
+    current_idx, file_name, _ = get_quiz_state(chat_id)
     if not file_name:
         await update.message.reply_text("⚠️ Pehle /startcomp use karke koi subject select karein!")
         return
-        
-    if chat_id not in COMPETITION_STATS:
-        COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
     display_sub = file_name.replace(".txt", "").replace("_", " ").title()
     await update.message.reply_text(f"▶️ Quiz wahi se Resume ho raha hai! Topic: {display_sub}\n⚡ Taiyar ho jao!")
@@ -640,7 +754,7 @@ async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
         
     chat_id = update.effective_chat.id
-    _, file_name = get_quiz_state(chat_id)
+    _, file_name, _ = get_quiz_state(chat_id)
     
     # 1. SEND ALL STUDENTS LIST
     all_msg = generate_leaderboard_msg(chat_id, file_name, "Result Checked")
@@ -662,7 +776,7 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     QUIZ_TASKS[chat_id].cancel()
     del QUIZ_TASKS[chat_id]
     
-    _, file_name = get_quiz_state(chat_id)
+    _, file_name, _ = get_quiz_state(chat_id)
     
     all_msg = generate_leaderboard_msg(chat_id, file_name, "Manually Stopped")
     await send_long_message(chat_id, all_msg, context)
@@ -686,6 +800,7 @@ async def setup_commands(application: Application):
             BotCommand("result", "Sabhi ka Result dobara dekhein"),
             BotCommand("resume", "Ruka hua quiz resume karein"),
             BotCommand("more", "Agle 50 questions mangwayein"),
+            BotCommand("restore", "Apna purana lost test recover karein"),
             BotCommand("resetq", "Question sequence reset karein")
         ]
         await application.bot.set_my_commands(commands)
@@ -710,6 +825,7 @@ def main():
     app.add_handler(CommandHandler("stop", stop_now))
     app.add_handler(CommandHandler("resume", resume_quiz))
     app.add_handler(CommandHandler("result", get_result_cmd))
+    app.add_handler(CommandHandler("restore", restore_lost_data))
     app.add_handler(CommandHandler("more", more_quiz))
     app.add_handler(CommandHandler("resetq", reset_question_number))
     
