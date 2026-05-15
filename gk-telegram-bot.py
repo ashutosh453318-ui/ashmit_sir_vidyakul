@@ -27,9 +27,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-TOKEN = "8653449129:AAGGbWi7UxLcGRqCgi3qIziADuMhMymP5y0"
+TOKEN = "8928907436:AAGRk3kWTB_4AHHimsHWr_9dVPdzlD0k_Qs"
 OWNER_ID = 6527942155
-GYANENDRA_SIR_USERNAME = "gyanendrasirchemistry" # Bina @ ke likhna hai
+GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -37,11 +37,9 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 # --- QUIZ FOLDERS & FILES HIERARCHY ---
 # Yahan se aap kitne bhi chapters add kar sakte hain
 QUIZ_STRUCTURE = {
-    "physics": {
-        "Chapter 1": "physics_chapter1.txt"
-    },
-    "chemistry": {
-        "Solution": "chemistry_chapter1.txt"
+    
+    "Math": {
+        "Test": "quiz.txt"
     }
 }
 
@@ -251,13 +249,13 @@ def load_questions(file_name):
         logger.error(f"File Error [{file_name}]: {e}")
     return questions
 
-# --- STRICT PERMISSION CHECK (ONLY SANTOSH & GYANENDRA SIR) ---
+# --- STRICT PERMISSION CHECK (ONLY SANTOSH & Ashmit SIR) ---
 async def is_authorized(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
     user = update.effective_user
     if not user:
         return False
         
-    # Check by ID (Santosh) or Username (Gyanendra Sir)
+    # Check by ID (Santosh) or Username (Ashmit Sir)
     if user.id == OWNER_ID or (user.username and user.username.lower() == GYANENDRA_SIR_USERNAME.lower()):
         return True
         
@@ -397,7 +395,7 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "👋 Hello! Main <b>Gyanendra Shukla</b>, aapko Ultimate Quiz Karaoonga.\n\n"
+        "👋 Hello! Main <b>Ashmit Sir</b>, aapko Ultimate Quiz Karaoonga.\n\n"
         "Main aapko <b>Physics</b> aur <b>Chemistry</b> chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
@@ -413,7 +411,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Gyanendra Sir (@gyanendrasirchemistry) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
 
     chat_id = update.effective_chat.id
@@ -438,7 +436,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Authorized checks for inline buttons
     if not await is_authorized(update, context):
-        await query.answer("🚫 Warning: Keval Santosh aur Gyanendra Sir hi ise use kar sakte hain!", show_alert=True)
+        await query.answer("🚫 Warning: Keval Santosh aur Ashmit Sir hi ise use kar sakte hain!", show_alert=True)
         return
 
     data = query.data
@@ -492,7 +490,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Gyanendra Sir (@gyanendrasirchemistry) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
@@ -500,7 +498,7 @@ async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Gyanendra Sir (@gyanendrasirchemistry) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     
@@ -525,7 +523,7 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Gyanendra Sir (@gyanendrasirchemistry) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     
