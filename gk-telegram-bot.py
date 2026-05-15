@@ -39,7 +39,6 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 QUIZ_STRUCTURE = {
     "Math": {
         "Test": "quiz.txt",
-        "Chapter 1": "chapter1.txt"
     }
 }
 
