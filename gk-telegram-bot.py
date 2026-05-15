@@ -360,7 +360,7 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(62) # Naya interval (8 sec timer + 2 sec extra wait)
+            await asyncio.sleep(8) # Naya interval (8 sec timer + 2 sec extra wait)
     except asyncio.CancelledError:
         return # Task Cancelled
     
