@@ -255,7 +255,7 @@ async def is_authorized(update: Update, context: ContextTypes.DEFAULT_TYPE) -> b
     if not user:
         return False
         
-    # Check by ID (Santosh) or Username (Ashmit Sir)
+    # Check by ID (____) or Username (Ashmit Sir)
     if user.id == OWNER_ID or (user.username and user.username.lower() == GYANENDRA_SIR_USERNAME.lower()):
         return True
         
@@ -410,7 +410,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
 
     chat_id = update.effective_chat.id
@@ -434,7 +434,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Authorized checks for inline buttons
     if not await is_authorized(update, context):
-        await query.answer("🚫 Warning: Keval Santosh aur Ashmit Sir hi ise use kar sakte hain!", show_alert=True)
+        await query.answer("🚫 Warning: Keval  Ashmit Sir hi ise use kar sakte hain!", show_alert=True)
         return
 
     data = query.data
@@ -487,7 +487,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
@@ -495,7 +495,7 @@ async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     
@@ -520,7 +520,7 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval Santosh aur Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
         return
     chat_id = update.effective_chat.id
     
