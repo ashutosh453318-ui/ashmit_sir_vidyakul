@@ -34,7 +34,7 @@ GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 # Group 2 Invite Link aur Passing Marks
 PASSING_MARKS = 70
 # YAHAN APNE DOOSRE GROUP KA LINK DAALNA MAT BHULNA!
-GROUP_2_INVITE_LINK = "___" 
+
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -278,7 +278,7 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
             
         msg_fail += f"\n⚠️ <b>SECOND CHANCE WARNING:</b>\n"
         msg_fail += f"Jo students fail hue hain, unko punishment ke roop mein niche diye gaye Group ko join karna padega (Koi auto-kick nahi hoga):\n\n"
-        msg_fail += f"🔗 <b>Group 2 Link:</b> {GROUP_2_INVITE_LINK}\n"
+       
     else:
         msg_fail += "Koi fail nahi hua! Sab safe hain 🎉\n"
     
