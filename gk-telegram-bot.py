@@ -311,8 +311,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
         correct_ans_text = question_data['options'][question_data['correct']]
         explanation_text = (
             f"✅ Sahi Jawab: {correct_ans_text}\n\n"
-            f"📱 Telegram: https://t.me/current_affairs_live_quiz\n"
-            f"🌐 Website: todayvacancy.in"
+           
         )
         
         message = await context.bot.send_poll(
