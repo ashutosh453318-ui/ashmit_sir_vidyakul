@@ -31,10 +31,10 @@ TOKEN = "8928907436:AAGRk3kWTB_4AHHimsHWr_9dVPdzlD0k_Qs"
 OWNER_ID = 6527942155
 GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 
-# Group 2 Invite Link aur Passing Marks
+# --- GROUPS & MARKS SETTINGS ---
 PASSING_MARKS = 70
-# YAHAN APNE DOOSRE GROUP KA LINK DAALNA MAT BHULNA!
-
+# Target 100 Group Link (70+ walon ke liye - Button click par DM me jayega)
+TARGET_100_LINK = "https://t.me/+7pQr2uUgs2llMTc1"
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -144,7 +144,7 @@ def record_answer(chat_id, user_id, full_name, is_correct, duration):
     cursor.execute("SELECT points, correct_answers, wrong_answers, total_duration FROM scores WHERE chat_id = ? AND user_id = ?", (chat_id, user_id))
     data = cursor.fetchone()
     
-    # RULE: 2 marks for correct, 0 for wrong (no negative marking)
+    # RULE: 2 marks for correct, 0 for wrong
     points_to_add = 2 if is_correct else 0
     corr_add = 1 if is_correct else 0
     wrong_add = 0 if is_correct else 1
@@ -175,11 +175,11 @@ def get_top_scorers(chat_id):
     conn.close()
     return rows
 
-# --- LONG MESSAGE HANDLER (TELEGRAM LIMIT FIX - 1020 CHARS) ---
-async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, parse_mode="HTML"):
+# --- LONG MESSAGE HANDLER (TELEGRAM LIMIT FIX) ---
+async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, parse_mode="HTML", reply_markup=None):
     max_length = 1020 
     if len(text) <= max_length:
-        await context.bot.send_message(chat_id, text, parse_mode=parse_mode)
+        await context.bot.send_message(chat_id, text, parse_mode=parse_mode, reply_markup=reply_markup)
         return
 
     lines = text.split('\n')
@@ -195,7 +195,8 @@ async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, p
             current_msg += line + "\n"
             
     if current_msg.strip():
-        await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode)
+        # Last message mein reply markup (button) jodna
+        await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode, reply_markup=reply_markup)
 
 # --- LEADERBOARD FORMATTER (ALL STUDENTS - LIST 1) ---
 def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
@@ -204,12 +205,11 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
     
     sub_title = file_name.replace(".txt", "").replace("_", " ").upper() if file_name else "QUIZ"
     
-    msg = f"🏁 <b>The quiz '{sub_title}' has finished! ({reason})</b>\n\n"
+    msg = f"🎓 <b>Ashmit sir Vidyakul:</b> The quiz '{sub_title}' has finished! ({reason})\n\n"
     msg += f"<i>{total_asked} questions answered (Max Marks: {total_asked * 2})</i>\n\n"
     msg += "🏆 <b>ALL STUDENTS RESULT:</b>\n\n"
     
     if top_users:
-        medals = ["🥇", "🥈", "🥉"]
         for idx, row in enumerate(top_users):
             name = row[0]
             points = row[1] or 0
@@ -220,17 +220,14 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
             skipped = total_asked - (correct + wrong)
             if skipped < 0: skipped = 0 
             
-            rank_icon = medals[idx] if idx < 3 else f"<b>{idx+1}.</b>"
-            
-            msg += f"{rank_icon} {name} – <b>{points} Marks</b> ({round(duration, 1)} sec)\n"
+            msg += f"<b>{idx+1}. {name}</b> – {points} Marks ({round(duration, 1)} sec)\n"
             msg += f"   ✅ Sahi: {correct} | ❌ Galat: {wrong} | ⏭️ Skipped: {skipped}\n\n"
-            
     else:
         msg += "Koi participate nahi kiya. 😔"
         
     return msg
 
-# --- SCORE ENFORCEMENT (70+ AND 70- LISTS - LIST 2 & LIST 3) ---
+# --- SCORE ENFORCEMENT (70+ TARGET 100 DM & 70- LISTS) ---
 async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
     try:
         chat = await context.bot.get_chat(chat_id)
@@ -241,7 +238,6 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
         return
 
     users = get_top_scorers(chat_id)
-    
     if not users:
         return 
         
@@ -258,34 +254,40 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
         else:
             failed_users.append((user_id, name, points))
             
-    msg_safe = "✅ <b>PASSED (70+ Marks) - Safe List:</b>\n\n"
+    # --- LIST 2: SAFE (70+ Marks) ---
+    msg_safe = "✅ <b>PASSED (70+ Marks) - Selected for Target 100:</b>\n\n"
     if passed_users:
         for uid, name, pts in passed_users:
             msg_safe += f"🔹 {name} - {pts} Marks\n"
+            
+        msg_safe += f"\n🎯 <i>Niche diye gaye 'Join Now' button pe click karein. (Agar aapke 70+ marks hain tabhi link milega!)</i>\n"
     else:
         msg_safe += "Koi bhi pass nahi hua 😔\n"
     
+    # ADDING THE JOIN NOW BUTTON
+    keyboard = [[InlineKeyboardButton("🎯 Join Target 100 Group", callback_data="join_target_100")]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     try:
-        await send_long_message(chat_id, msg_safe, context)
+        await send_long_message(chat_id, msg_safe, context, reply_markup=reply_markup)
         await asyncio.sleep(1) 
     except Exception as e:
         logger.error(f"Failed to send safe list: {e}")
 
-    msg_fail = "❌ <b>FAILED (< 70 Marks) - Punishment List:</b>\n\n"
+    # --- LIST 3: BELOW TARGET (<70 Marks) ---
+    msg_fail = "❌ <b>BELOW TARGET (< 70 Marks) - Not Selected:</b>\n\n"
     if failed_users:
         for uid, name, pts in failed_users:
             msg_fail += f"🔸 {name} - {pts} Marks\n"
             
-        msg_fail += f"\n⚠️ <b>SECOND CHANCE WARNING:</b>\n"
-        msg_fail += f"Jo students fail hue hain, unko punishment ke roop mein niche diye gaye Group ko join karna padega (Koi auto-kick nahi hoga):\n\n"
-       
+        msg_fail += f"\n⚠️ Aap sabhi zyada mehnat karein aur next test me 70+ layein taaki aap bhi 'Target 100' group me select ho sakein!\n"
     else:
-        msg_fail += "Koi fail nahi hua! Sab safe hain 🎉\n"
+        msg_fail += "Sabhi students Target 100 ke liye select ho gaye! 🎉\n"
     
     try:
         await send_long_message(chat_id, msg_fail, context)
     except Exception as e:
-        logger.error(f"Failed to send punishment msg: {e}")
+        logger.error(f"Failed to send fail msg: {e}")
 
 # --- FILE SETUP & READING ---
 def create_dummy_files_if_not_exist():
@@ -473,6 +475,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "🔹 /stop - Stop an ongoing quiz (Result show hoga)\n"
         "🔹 /resume - Ruka hua quiz wahi se aage badhayein\n"
         "🔹 /more - Agle 50 questions mangwayein\n"
+        "🔹 /result - Sabhi students ka Result dobara show karein\n"
         "🔹 /resetq - Question sequence reset karein\n\n"
         "Niche command pe click karein ya menu se select karein! 🚀"
     )
@@ -504,12 +507,37 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer() 
     
+    data = query.data
+    chat_id = query.message.chat_id
+    user_id = query.from_user.id
+    
+    # --- JOIN TARGET 100 BUTTON LOGIC ---
+    if data == "join_target_100":
+        # Check eligibility
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT points FROM scores WHERE chat_id = ? AND user_id = ?", (chat_id, user_id))
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row:
+            points = row[0]
+            if points >= PASSING_MARKS or user_id == OWNER_ID:
+                try:
+                    await context.bot.send_message(user_id, f"🎉 Congratulations! Aap eligible hain.\n\n🔗 Target 100 Group Link: {TARGET_100_LINK}")
+                    await query.answer("✅ Aapko private message (DM) mein link bhej diya gaya hai!", show_alert=True)
+                except Exception:
+                    await query.answer("⚠️ Link bhejne me error! Pehle bot ko private me start karein.", show_alert=True)
+            else:
+                await query.answer("❌ Sorry you are not eligible. 70+ marks required.", show_alert=True)
+        else:
+            await query.answer("❌ Aapne is quiz me hissa nahi liya hai.", show_alert=True)
+        return
+
+    # Authorized checks for other inline buttons
     if not await is_authorized(update, context):
         await query.answer("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge", show_alert=True)
         return
-
-    data = query.data
-    chat_id = query.message.chat_id
     
     if data == "back_to_main":
         keyboard = [
@@ -540,7 +568,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         update_quiz_state(chat_id, 0, file_name)
         COMPETITION_STATS[chat_id] = {'total_asked': 0}
         
-        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n⚠️ Jo < 70 marks layega unhe punishment ke liye group 2 bheja jayega!\n\nTaiyar ho jao! 🏁")
+        await query.edit_message_text(f"🚀 {display_sub} COMPETITION START! 🚀\n⚡ 50 Questions ka round\n⚡ Har 60 Second me Naya Sawal\n\nTaiyar ho jao! 🏁")
         
         if chat_id in QUIZ_TASKS:
             QUIZ_TASKS[chat_id].cancel()
@@ -605,6 +633,22 @@ async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     task = asyncio.create_task(quiz_runner_task(chat_id, context))
     QUIZ_TASKS[chat_id] = task
 
+async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Kisi bhi time par poora result (with button) mangane ke liye"""
+    if not await is_authorized(update, context):
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+        return
+        
+    chat_id = update.effective_chat.id
+    _, file_name = get_quiz_state(chat_id)
+    
+    # 1. SEND ALL STUDENTS LIST
+    all_msg = generate_leaderboard_msg(chat_id, file_name, "Result Checked")
+    await send_long_message(chat_id, all_msg, context)
+    
+    # 2 & 3. SEND SAFE/FAIL LIST WITH JOIN BUTTON
+    await enforce_score_rules(chat_id, context)
+
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
         await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
@@ -639,6 +683,7 @@ async def setup_commands(application: Application):
             BotCommand("start", "Welcome message dekhein"),
             BotCommand("startcomp", "Quiz competition start karein"),
             BotCommand("stop", "Current quiz ko stop karein"),
+            BotCommand("result", "Sabhi ka Result dobara dekhein"),
             BotCommand("resume", "Ruka hua quiz resume karein"),
             BotCommand("more", "Agle 50 questions mangwayein"),
             BotCommand("resetq", "Question sequence reset karein")
@@ -664,6 +709,7 @@ def main():
     app.add_handler(CommandHandler("startcomp", show_quiz_menu)) 
     app.add_handler(CommandHandler("stop", stop_now))
     app.add_handler(CommandHandler("resume", resume_quiz))
+    app.add_handler(CommandHandler("result", get_result_cmd))
     app.add_handler(CommandHandler("more", more_quiz))
     app.add_handler(CommandHandler("resetq", reset_question_number))
     
