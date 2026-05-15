@@ -34,7 +34,7 @@ GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 # Group 2 Invite Link aur Passing Marks
 PASSING_MARKS = 70
 # YAHAN APNE DOOSRE GROUP KA LINK DAALNA MAT BHULNA!
-GROUP_2_INVITE_LINK = "_" 
+GROUP_2_INVITE_LINK = "https://t.me/+AAPKA_GROUP_2_KA_LINK_YAHAN_DALEIN" 
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -177,11 +177,7 @@ def get_top_scorers(chat_id):
 
 # --- LONG MESSAGE HANDLER (TELEGRAM LIMIT FIX - 1020 CHARS) ---
 async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, parse_mode="HTML"):
-    """
-    Agar message bahut lamba ho (limit 1020 chars jo aapne request ki), 
-    toh ye automatically lines me split karke bar-bar me send kar dega taaki error na aaye.
-    """
-    max_length = 1020 # Aapki di gayi limit
+    max_length = 1020 
     if len(text) <= max_length:
         await context.bot.send_message(chat_id, text, parse_mode=parse_mode)
         return
@@ -194,7 +190,7 @@ async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, p
             if current_msg.strip():
                 await context.bot.send_message(chat_id, current_msg, parse_mode=parse_mode)
             current_msg = line + "\n"
-            await asyncio.sleep(1) # Flood control
+            await asyncio.sleep(1) 
         else:
             current_msg += line + "\n"
             
@@ -247,7 +243,7 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
     users = get_top_scorers(chat_id)
     
     if not users:
-        return # Koi khelega nahi toh ye list nahi aayegi
+        return 
         
     passed_users = []
     failed_users = []
@@ -262,7 +258,6 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
         else:
             failed_users.append((user_id, name, points))
             
-    # --- LIST 2: SAFE (70+ Marks) ---
     msg_safe = "✅ <b>PASSED (70+ Marks) - Safe List:</b>\n\n"
     if passed_users:
         for uid, name, pts in passed_users:
@@ -272,11 +267,10 @@ async def enforce_score_rules(chat_id, context: ContextTypes.DEFAULT_TYPE):
     
     try:
         await send_long_message(chat_id, msg_safe, context)
-        await asyncio.sleep(1) # Thoda delay message sequence maintain karne ke liye
+        await asyncio.sleep(1) 
     except Exception as e:
         logger.error(f"Failed to send safe list: {e}")
 
-    # --- LIST 3: FAILED (<70 Marks) AND PUNISHMENT ---
     msg_fail = "❌ <b>FAILED (< 70 Marks) - Punishment List:</b>\n\n"
     if failed_users:
         for uid, name, pts in failed_users:
@@ -351,7 +345,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if re.search(r"(https?://|t\.me/|www\.|bit\.ly|\.com|\.in|\.net)", text):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, Links allowed nahi hain!")
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
             await asyncio.sleep(1)
             await warning.delete()
         except: pass
@@ -360,7 +354,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if any(word in text for word in BANNED_WORDS):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, Gali ya Spam allowed nahi hai!")
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
             await asyncio.sleep(5)
             await warning.delete()
         except: pass
@@ -397,7 +391,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,
             is_anonymous=False,
-            open_period=60 # CHANGED TO 60 Second Timer
+            open_period=60 
         )
         
         ACTIVE_POLLS[message.poll.id] = {
@@ -432,7 +426,6 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            # 62 SECONDS (60 sec poll timer + 2 sec gap)
             await asyncio.sleep(62) 
     except asyncio.CancelledError:
         return 
@@ -440,14 +433,11 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
     if chat_id in QUIZ_TASKS:
         _, file_name = get_quiz_state(chat_id)
         
-        # 1. SEND ALL STUDENTS LIST (LIST 1)
         all_msg = generate_leaderboard_msg(chat_id, file_name, reason)
         await send_long_message(chat_id, all_msg, context)
         
-        # 2 & 3. SEND 70+ AND 70- LISTS (LIST 2 AND LIST 3)
         await enforce_score_rules(chat_id, context)
         
-        # Free quiz queue
         del QUIZ_TASKS[chat_id]
 
 async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -471,6 +461,10 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not await is_authorized(update, context):
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+        return
+        
     welcome_message = (
         "👋 Hello! Main <b>Ashmit Sir</b>, aapka Math teacher, aapko Ultimate Quiz Karaoonga.\n\n"
         "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
@@ -488,7 +482,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
         return
 
     chat_id = update.effective_chat.id
@@ -510,7 +504,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer() 
     
     if not await is_authorized(update, context):
-        await query.answer("🚫 Warning: Keval  Ashmit Sir hi ise use kar sakte hain!", show_alert=True)
+        await query.answer("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge", show_alert=True)
         return
 
     data = query.data
@@ -555,7 +549,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
         return
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
@@ -563,7 +557,7 @@ async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
         return
     chat_id = update.effective_chat.id
     
@@ -587,7 +581,7 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: Yeh command keval  Ashmit Sir (@ANISH2333) hi start kar sakte hain!")
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
         return
     chat_id = update.effective_chat.id
     
@@ -600,12 +594,18 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     _, file_name = get_quiz_state(chat_id)
     
-    # 1. SEND ALL STUDENTS LIST (LIST 1)
     all_msg = generate_leaderboard_msg(chat_id, file_name, "Manually Stopped")
     await send_long_message(chat_id, all_msg, context)
     
-    # 2 & 3. SEND 70+ AND 70- LISTS (LIST 2 AND LIST 3)
     await enforce_score_rules(chat_id, context)
+
+# --- GENERIC UNKNOWN COMMAND HANDLER ---
+async def unknown_command_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """
+    Koi bhi random /command agar group me bheji gayi toh ye bot turant warning de dega.
+    """
+    if not await is_authorized(update, context):
+        await update.message.reply_text("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
 
 async def setup_commands(application: Application):
     try:
@@ -632,11 +632,16 @@ def main():
     req = HTTPXRequest(connection_pool_size=20, connect_timeout=30, read_timeout=30)
     app = Application.builder().token(TOKEN).request(req).post_init(setup_commands).build()
 
+    # Registered Commands
     app.add_handler(CommandHandler("start", start_bot))
     app.add_handler(CommandHandler("startcomp", show_quiz_menu)) 
     app.add_handler(CommandHandler("stop", stop_now))
     app.add_handler(CommandHandler("more", more_quiz))
     app.add_handler(CommandHandler("resetq", reset_question_number))
+    
+    # Catch any other random commands
+    app.add_handler(MessageHandler(filters.COMMAND, unknown_command_handler))
+
     app.add_handler(CallbackQueryHandler(button_callback))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, moderate_messages))
     app.add_handler(PollAnswerHandler(handle_poll_answer))
