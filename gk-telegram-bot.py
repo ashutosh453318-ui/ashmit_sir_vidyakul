@@ -426,7 +426,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if re.search(r"(https?://|t\.me/|www\.|bit\.ly|\.com|\.in|\.net)", text):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo Gwaron is warna is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho ")
             await asyncio.sleep(1)
             await warning.delete()
         except: pass
