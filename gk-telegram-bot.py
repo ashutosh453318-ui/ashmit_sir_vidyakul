@@ -255,6 +255,25 @@ def get_top_scorers(chat_id):
     conn.close()
     return rows
 
+# --- HELPER TO AUTO-DELETE WARNINGS ---
+async def send_temp_warning(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Deletes the unauthorized command and sends a temporary warning."""
+    try:
+        await update.message.delete()
+    except Exception:
+        pass # Bot might not have delete permissions, but will still warn
+        
+    chat_id = update.effective_chat.id
+    msg = await context.bot.send_message(
+        chat_id=chat_id, 
+        text="🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge"
+    )
+    await asyncio.sleep(5)
+    try:
+        await msg.delete()
+    except Exception:
+        pass
+
 # --- LONG MESSAGE HANDLER (TELEGRAM LIMIT FIX) ---
 async def send_long_message(chat_id, text, context: ContextTypes.DEFAULT_TYPE, parse_mode="HTML", reply_markup=None):
     max_length = 1020 
@@ -426,8 +445,8 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if re.search(r"(https?://|t\.me/|www\.|bit\.ly|\.com|\.in|\.net)", text):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho ")
-            await asyncio.sleep(1)
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+            await asyncio.sleep(5)
             await warning.delete()
         except: pass
         return
@@ -435,7 +454,7 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if any(word in text for word in BANNED_WORDS):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
             await asyncio.sleep(5)
             await warning.delete()
         except: pass
@@ -539,7 +558,7 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
         
     welcome_message = (
@@ -547,7 +566,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
-        "🔹 /stop - Stop an ongoing quiz\n"
+        "🔹 /stop - Stop an ongoing quiz (Result show hoga)\n"
         "🔹 /resume - Ruka hua quiz wahi se aage badhayein\n"
         "🔹 /result - Sabhi students ka Result dobara show karein\n"
         "🔹 /more - Agle 50 questions mangwayein\n"
@@ -561,9 +580,8 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logger.error(f"Start CMD error: {e}")
 
 async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Render ke server restart hone par agar live test delete ho jaye toh recovery ke liye"""
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
         
     chat_id = update.effective_chat.id
@@ -575,7 +593,6 @@ async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     # Restore the saved list
     for idx, item in enumerate(RESTORE_DATA):
-        # Assign a fake temporary negative user_id 
         fake_uid = -1000 - idx
         cursor.execute("""
             INSERT INTO scores (chat_id, user_id, full_name, points, correct_answers, wrong_answers, total_duration) 
@@ -592,7 +609,7 @@ async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
 
     chat_id = update.effective_chat.id
@@ -660,7 +677,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Authorized checks for other inline buttons
     if not await is_authorized(update, context):
-        await query.answer("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho", show_alert=True)
+        await query.answer("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge", show_alert=True)
         return
     
     if data == "back_to_main":
@@ -701,7 +718,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
@@ -709,7 +726,7 @@ async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
     chat_id = update.effective_chat.id
     
@@ -729,9 +746,8 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     QUIZ_TASKS[chat_id] = task
 
 async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Bich me ruka hua quiz wahi se aage badhane ke liye"""
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
     chat_id = update.effective_chat.id
     
@@ -751,24 +767,20 @@ async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     QUIZ_TASKS[chat_id] = task
 
 async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Kisi bhi time par poora result (with button) mangane ke liye"""
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
         
     chat_id = update.effective_chat.id
     _, file_name, _ = get_quiz_state(chat_id)
     
-    # 1. SEND ALL STUDENTS LIST
     all_msg = generate_leaderboard_msg(chat_id, file_name, "Result Checked")
     await send_long_message(chat_id, all_msg, context)
-    
-    # 2 & 3. SEND SAFE/FAIL LIST WITH JOIN BUTTON
     await enforce_score_rules(chat_id, context)
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
         return
     chat_id = update.effective_chat.id
     
@@ -786,13 +798,9 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await enforce_score_rules(chat_id, context)
 
-# --- GENERIC UNKNOWN COMMAND HANDLER ---
 async def unknown_command_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """
-    Koi bhi random /command agar group me bheji gayi toh ye bot turant warning de dega.
-    """
     if not await is_authorized(update, context):
-        await update.message.reply_text("🚫 Warning: spam mat karo Gwaron warna  is group se bhi exit kar denge is group me bhi rahne layak nahi ho tum sab itna spam kar rahe ho")
+        await send_temp_warning(update, context)
 
 async def setup_commands(application: Application):
     try:
