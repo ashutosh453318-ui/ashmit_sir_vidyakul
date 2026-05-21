@@ -27,9 +27,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-TOKEN = "8928907436:AAGRk3kWTB_4AHHimsHWr_9dVPdzlD0k_Qs"
+TOKEN = "8971763348:AAEk7xWP53wMowX4Kaok53ZRF7q6tZS5flo"
 OWNER_ID = 6527942155
-GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
+GYANENDRA_SIR_USERNAME = "Sandilyamayank" # Bina @ ke likhna hai
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -322,7 +322,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,  # Bulb Icon & Text included here
             is_anonymous=False,
-            open_period=60 # CHANGED TO 8 Second Timer
+            open_period=30 # CHANGED TO 8 Second Timer
         )
         
         # Save Send Time to Calculate Duration
@@ -360,7 +360,7 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(8) # Naya interval (8 sec timer + 2 sec extra wait)
+            await asyncio.sleep(30) # Naya interval (8 sec timer + 2 sec extra wait)
     except asyncio.CancelledError:
         return # Task Cancelled
     
