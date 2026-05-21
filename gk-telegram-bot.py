@@ -40,7 +40,7 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 
 # --- QUIZ FOLDERS & FILES HIERARCHY ---
 QUIZ_STRUCTURE = {
-    "Math": {
+    "Chemistry": {
         "Test": "quiz.txt",
     }
 }
@@ -303,7 +303,7 @@ def generate_leaderboard_msg(chat_id, file_name, reason="Completed"):
     
     sub_title = file_name.replace(".txt", "").replace("_", " ").upper() if file_name else "QUIZ"
     
-    msg = f"🎓 <b>Ashmit sir Vidyakul:</b> The quiz '{sub_title}' has finished! ({reason})\n\n"
+    msg = f"🎓 <b>Santosh Devloper:</b> The quiz '{sub_title}' has finished! ({reason})\n\n"
     msg += f"<i>{total_asked} questions answered (Max Marks: {total_asked * 2})</i>\n\n"
     msg += "🏆 <b>ALL STUDENTS RESULT:</b>\n\n"
     
@@ -562,8 +562,8 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
         
     welcome_message = (
-        "👋 Hello! Main <b>Ashmit Sir</b>, aapka Math teacher, aapko Ultimate Quiz Karaoonga.\n\n"
-        "Main aapko <b>Maths</b> ke chapters sikhne me madad karunga.\n\n"
+        "👋 Hello! Main <b>Santosh Devloper</b>, aapka Chemistry , aapko Ultimate Quiz Karaoonga.\n\n"
+        "Main aapko <b>Chemistrys</b> ke chapters sikhne me madad karunga.\n\n"
         "📜 <b>This Features:</b>\n"
         "🔹 /startcomp - Start a new quiz competition\n"
         "🔹 /stop - Stop an ongoing quiz (Result show hoga)\n"
@@ -618,7 +618,7 @@ async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     keyboard = [
-        [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
+        [InlineKeyboardButton("📐 Chemistrys", callback_data="subj_Chemistry")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     try:
@@ -682,7 +682,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if data == "back_to_main":
         keyboard = [
-            [InlineKeyboardButton("📐 Maths", callback_data="subj_Math")]
+            [InlineKeyboardButton("📐 Chemistrys", callback_data="subj_Chemistry")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text("📚 <b>Choose a Subject to Start Quiz:</b>", reply_markup=reply_markup, parse_mode="HTML")
