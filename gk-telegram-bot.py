@@ -27,7 +27,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # --- CONFIGURATION ---
-TOKEN = "8928907436:AAGRk3kWTB_4AHHimsHWr_9dVPdzlD0k_Qs"
+TOKEN = "8971763348:AAEk7xWP53wMowX4Kaok53ZRF7q6tZS5flo"
 OWNER_ID = 6527942155
 GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
 
@@ -491,7 +491,7 @@ async def send_sequential_quiz(context: ContextTypes.DEFAULT_TYPE, chat_id: int)
             correct_option_id=question_data['correct'],
             explanation=explanation_text,
             is_anonymous=False,
-            open_period=60 
+            open_period=30 
         )
         
         ACTIVE_POLLS[message.poll.id] = {
@@ -522,7 +522,7 @@ async def quiz_runner_task(chat_id: int, context: ContextTypes.DEFAULT_TYPE):
                 reason = "All Questions Completed!"
                 break
                 
-            await asyncio.sleep(62) 
+            await asyncio.sleep(30) 
     except asyncio.CancelledError:
         return 
     
