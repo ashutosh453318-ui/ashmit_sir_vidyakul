@@ -27,4 +27,4 @@ Which of the following reactions is possible at anode? | 2Cr3+ + 7H2O -> Cr2O72-
 How much charge is required for reduction of 1 mole of Al3+ to Al? | 3.0 x 10^5 C | 28.95 x 10^5 C | 289.5 x 10^5 C | 2.895 x 10^5 C | 4
 The standard reduction potential values of elements A, B and C are +0.68 V, -2.50 V and 0.50 V respectively. The order of their reducing power is | A > B > C | A > C > B | C > B > A | B > C > A | 4
 In the cell Zn/Zn2+//Cu2+/Cu, the negative terminal is | Cu | Cu2+ | Zn | Zn2+ | 3
-A solid AB has a rock salt structure. If radius of cation A+ is 120 pm, what is the minimum value of radius of B- anion? | 120 pm | 240 pm | 290 pm | 360 pm | 3
+A solid AB has a rock salt structure. If radius of cation A+ is 120 pm, what is the minimum value of radius of B- anion? | 120 pm | 240 pm | 290 pm | 360 pm | 3 
