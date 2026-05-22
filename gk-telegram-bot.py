@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 # --- CONFIGURATION ---
 TOKEN = "8971763348:AAEk7xWP53wMowX4Kaok53ZRF7q6tZS5flo"
 OWNER_ID = 6527942155
-GYANENDRA_SIR_USERNAME = "@Sandilyamayank" # Bina @ ke likhna hai
+GYANENDRA_SIR_USERNAME = "Sandilyamayank" # Bina @ ke likhna hai
 
 # --- GROUPS & MARKS SETTINGS ---
 PASSING_MARKS = 70
