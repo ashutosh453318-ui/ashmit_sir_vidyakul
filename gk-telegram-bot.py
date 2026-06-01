@@ -53,7 +53,6 @@ COMPETITION_STATS = {}
 RESTORE_DATA = [
     ("Anjali Kumari", 98, 49, 1, 0, 1069.4),
     ("Rituraj Raj", 92, 46, 4, 0, 1132.9)
-   
 ]
 
 # --- DUMMY WEB SERVER FOR RENDER ---
@@ -379,18 +378,12 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if re.search(r"(https?://|t\.me/|www\.|bit\.ly|\.com|\.in|\.net)", text):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
-            await asyncio.sleep(5)
-            await warning.delete()
         except: pass
         return
 
     if any(word in text for word in BANNED_WORDS):
         try:
             await update.message.delete()
-            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
-            await asyncio.sleep(5)
-            await warning.delete()
         except: pass
 
 # --- CUSTOM QUIZ RUNNER ---
@@ -492,8 +485,7 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
         
     welcome_message = (
         "👋 Hello! Main <b>Santosh Devloper</b>, aapka Chemistry , aapko Ultimate Quiz Karaoonga.\n\n"
@@ -515,8 +507,7 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
         
     chat_id = update.effective_chat.id
     conn = get_db_connection()
@@ -543,8 +534,7 @@ async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
 
     chat_id = update.effective_chat.id
     if chat_id in QUIZ_TASKS:
@@ -600,18 +590,12 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         text=f"🎉 Congratulations {query.from_user.first_name}!\n\nAap 'Target 100' group ke liye eligible hain.\n🔗 <b>Join here:</b> {TARGET_100_LINK}",
                         parse_mode="HTML"
                     )
-                    await query.answer("✅ Aapko Private Message (Inbox) me link bhej diya gaya hai. Wahan se join karein!", show_alert=True)
                 except Exception:
-                    await query.answer("⚠️ Link bhejne me error! Pehle bot ko private me jaakar /start press karein, tabhi bot aapko link bhej payega.", show_alert=True)
-            else:
-                await query.answer("❌ Sorry you are not eligible. 70+ marks required.", show_alert=True)
-        else:
-            await query.answer("❌ Aapne is quiz me hissa nahi liya hai. Only participants allowed!", show_alert=True)
+                    pass
         return
 
-    # Authorized checks for other inline buttons
+    # Authorized checks for other inline buttons (SILENTLY IGNORE UNAUTHORIZED)
     if not await is_authorized(update, context):
-        await query.answer("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge", show_alert=True)
         return
     
     if data == "back_to_main":
@@ -652,16 +636,14 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
     await update.message.reply_text("✅ Sequence reset to Question 1.")
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
     chat_id = update.effective_chat.id
     
     if chat_id in QUIZ_TASKS:
@@ -681,8 +663,7 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
     chat_id = update.effective_chat.id
     
     if chat_id in QUIZ_TASKS:
@@ -702,8 +683,7 @@ async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
         
     chat_id = update.effective_chat.id
     _, file_name, _ = get_quiz_state(chat_id)
@@ -714,8 +694,7 @@ async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
-        return
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
     chat_id = update.effective_chat.id
     
     if chat_id not in QUIZ_TASKS:
@@ -734,7 +713,7 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def unknown_command_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        await send_temp_warning(update, context)
+        return  # SILENTLY IGNORE UNAUTHORIZED USERS
 
 async def setup_commands(application: Application):
     try:
