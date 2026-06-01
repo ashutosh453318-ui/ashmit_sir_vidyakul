@@ -1,30 +1,50 @@
-Which one of the following is not a colligative properties? | Osmotic pressure | Vapour pressure | Elevation of boiling point | Depression of Freezing point | 2
-The relative lowering of vapour pressure of a solution of 6 g of urea in 90 g of water is equal to | 0.02 | 0.04 | 0.60 | 0.03 | 1
-Which one of the following concentration units does not depend on temperature? | Normality | Molarity | Molality | All of these | 3
-What is soda water? | Solution of CO2 gas in water | Solution of CO2 gas in gas | Solution of water in solid | All of these | 1
-Study the figure of a solid depicting arrangement of particles. Which is the most appropriate term used for it? | Isotropy | Anisotropy | Irregular | Amorphous nature | 2
-Homogeneous mixture of two or more than two components is called | solute | solvent | Both A and B | solution | 4
-Which of the following is an example of gaseous solution? | Camphor in nitrogen gas | Solution of hydrogen in palladium | Chloroform mixed with nitrogen gas | Both A and C | 1
-234.2 gm of sugar syrup contains 34.2 gm sugar. What is the molality of the solution? | 0.1 | 0.5 | 3.0 | 4.0 | 2
-In amalgam of mercury with sodium, solvent is | mercury | sodium | amalgam | None of these | 2
-What is the mole fraction of glucose in 10% w/W glucose solution? | 0.01 | 0.02 | 0.03 | 0.04 | 1
-Which of the following respiratory machines by mixture of gases is used for deep sea divers? | Nitrogen + Oxygen | Neon + Oxygen | Helium + Oxygen | Krypton + Oxygen | 3
-Which one of the following is a colligative property? | Viscosity | Surface tension | Refractive index | Osmotic pressure | 4
-In comparison to 0.01 M solution of glucose, the depression in freezing point of 0.01 M MgCl2 solution is | same | about twice | about three times | about six times | 3
-The van't Hoff factor of Ca(NO3)2 is | 1 | 2 | 3 | 4 | 3
-Tyndall effect is observed in | Solution | Precipitate | Sol | Vapours | 3
-One Faraday of electricity is equal to how many coulombs? | 96500 | 96550 | 94500 | 96000 | 1
-Inverse of resistance is called | Conductance | Resistance | Good conductor | None of these | 1
-For strong electrolytes molar conductivity | increases on dilution | decreases on dilution | remains constant on dilution | All of these | 1
-The unit of specific conductance is | Ohm cm-1 | Ohm cm-2 | Ohm-1 cm-1 | Ohm-1 cm-2 | 3
-Which of the following is necessary for rusting of iron? | Dry air | Moist air | Distilled water | Oxygen and CO2 | 2
-In a Daniell cell | chemical energy is converted to electrical energy | electrical energy is converted to chemical energy | utilized in conduction | potential energy is converted to electrical | 1
-Which of the following is the correct cell representation for the given cell reaction? Zn + H2SO4 -> ZnSO4 + H2 | Zn / Zn2+ // H+ / H2 | Zn / Zn2+ // H+, H2 / Pt | Zn / ZnSO4 // H2SO4 / Zn | Zn / H2SO4 // ZnSO4 / H2 | 2
-When a chemical reaction takes place, during the course of the reaction the rate of reaction | keeps on increasing with time | remains constant with time | keeps on decreasing with time | shows irregular trend with time | 3
-The best way to protect iron from rusting is | Making iron cathode | Putting it in saline water | Both A and B | None of these | 1
-The cell reaction of the galvanic cell: Cu(s)/Cu2+(aq)//Hg2+(aq)/Hg(l) is | Hg + Cu2+ -> Hg2+ + Cu | Hg + Cu2+ -> Cu + Hg+ | Cu + Hg -> CuHg | Cu + Hg2+ -> Cu2+ + Hg | 4
-Which of the following reactions is possible at anode? | 2Cr3+ + 7H2O -> Cr2O72- + 14H+ | F2 -> 2F- | 1/2 O2 + 2H+ -> H2O | None of these | 1
-How much charge is required for reduction of 1 mole of Al3+ to Al? | 3.0 x 10^5 C | 28.95 x 10^5 C | 289.5 x 10^5 C | 2.895 x 10^5 C | 4
-The standard reduction potential values of elements A, B and C are +0.68 V, -2.50 V and 0.50 V respectively. The order of their reducing power is | A > B > C | A > C > B | C > B > A | B > C > A | 4
-In the cell Zn/Zn2+//Cu2+/Cu, the negative terminal is | Cu | Cu2+ | Zn | Zn2+ | 3
-A solid AB has a rock salt structure. If radius of cation A+ is 120 pm, what is the minimum value of radius of B- anion? | 120 pm | 240 pm | 290 pm | 360 pm | 3 
+Which of the following is the SI unit of conductivity (specific conductance)? | S m^-1 | S m^2 mol^-1 | Ohm m | S^-1 m^-1 | 1
+The cell constant of a conductivity cell is represented by which formula? | l/A | A/l | l*A | R/l | 1
+Which of the following is a strong electrolyte? | CH3COOH | NaCl | NH4OH | H2CO3 | 2
+Faraday's first law of electrolysis is mathematically represented as | w = zIt | w = z/It | w = It/z | w = zI/t | 1
+How many Coulombs of charge are required to reduce 1 mole of Al^3+ to Al? | 96500 C | 193000 C | 289500 C | 386000 C | 3
+Rusting of iron is catalyzed by which of the following species? | Fe^2+ | H^+ | O2 | H2O | 2
+The standard electrode potential of a Normal Hydrogen Electrode (NHE) is | 1.0 V | 0.0 V | -1.0 V | 0.5 V | 2
+The amount of charge carried by 1 mole of electrons is approximately | 1.6 * 10^-19 C | 96500 C | 6.02 * 10^23 C | 9.11 * 10^-31 C | 2
+On increasing dilution, the specific conductance of an electrolytic solution | increases | decreases | remains constant | first increases then decreases | 2
+On increasing dilution, the molar conductivity of an electrolytic solution | increases | decreases | remains constant | drops to zero | 1
+Kohlrausch's law of independent migration of ions is applicable to | strong electrolytes only | weak electrolytes only | both strong and weak electrolytes at infinite dilution | non-electrolytes | 3
+In a Galvanic cell, the anode always acts as the | positive electrode | negative electrode | neutral electrode | reference electrode | 2
+In an electrolytic cell, the cathode acts as the | positive electrode | negative electrode | active electrode | none of these | 2
+Which of the following is an example of a secondary cell (rechargeable battery)? | Dry cell | Mercury cell | Lead storage battery | Fuel cell | 3
+The prevention of corrosion of iron by coating it with a thin layer of zinc is called | Galvanization | Electroplating | Alloying | Tinning | 1
+A standard hydrogen electrode is represented as | Pt, H2(g) (1 bar) | H+ (1 M) | Pt, H2(g) (1 bar) | H+ (1 M) | Both A and B | None of these | 3
+The EMF of a cell made of anode and cathode is given by | E_cell = E_cathode - E_anode | E_cell = E_anode - E_cathode | E_cell = E_cathode + E_anode | E_cell = - (E_cathode + E_anode) | 1
+The inert electrolyte filled in a salt bridge is usually mixed with | agar-agar gel | gelatin | water only | both A and B | 4
+Specific conductance is equal to | Conductance * Cell constant | Conductance / Cell constant | Resistance * Cell constant | Resistance / Cell constant | 1
+During the electrolysis of an aqueous solution of NaCl, the gas liberated at the anode is | Hydrogen | Oxygen | Chlorine | Nitrogen | 3
+A Daniell cell is a classic example of which type of cell? | Electrolytic cell | Galvanic cell | Concentration cell | Fuel cell | 2
+The unit of molar conductivity is | S cm^2 mol^-1 | S cm^-1 mol^-1 | S^-1 cm^2 mol | Ohm cm^2 mol^-1 | 1
+The electrochemical equivalent of a substance is the mass liberated by passing | 1 Faraday of charge | 1 Coulomb of charge | 96500 Coulombs of charge | 1 Ampere of current | 2
+Which of the following does not conduct electricity? | Solid NaCl | Molten NaCl | Aqueous NaCl | Copper wire | 1
+In the Nernst equation, the value of 2.303 RT/F at 298 K is taken as | 0.0591 | 0.0295 | 0.591 | 0.0118 | 1
+The rate of a chemical reaction generally | increases with time | decreases with time | remains constant throughout | first increases then decreases | 2
+The standard unit for the rate of a chemical reaction is | mol L^-1 s^-1 | mol L s^-1 | L mol^-1 s^-1 | s^-1 | 1
+For a first-order chemical reaction, the unit of the rate constant (k) is | mol L^-1 s^-1 | s^-1 | L mol^-1 s^-1 | L^2 mol^-2 s^-1 | 2
+For a zero-order chemical reaction, the unit of the rate constant (k) is | mol L^-1 s^-1 | s^-1 | L mol^-1 s^-1 | L^2 mol^-2 s^-1 | 1
+The half-life period (t_1/2) of a first-order reaction is | proportional to initial concentration | inversely proportional to initial concentration | independent of initial concentration | proportional to square of initial concentration | 3
+The mathematical expression for the half-life of a first-order reaction is | t_1/2 = 0.693 / k | t_1/2 = 0.693 * k | t_1/2 = 2.303 / k | t_1/2 = a / 2k | 1
+With a 10 degree Celsius rise in temperature, the rate of most chemical reactions becomes | half | double to triple | ten times | remains unchanged | 2
+A catalyst increases the rate of a reaction by | increasing the activation energy | decreasing the activation energy | increasing the enthalpy change | decreasing the enthalpy change | 2
+If the rate law of a reaction is Rate = k[A]^2[B]^1, the overall order of the reaction is | 1 | 2 | 3 | 0 | 3
+The value of the order of a chemical reaction can be | zero | fractional | integer | all of these | 4
+The molecularity of a chemical reaction can never be | integer | fractional or zero | positive | none of these | 2
+The Arrhenius equation expressing the effect of temperature on rate constant is | k = A * e^(-Ea/RT) | k = A * e^(Ea/RT) | k = ln A - Ea/RT | k = A * e^(-RT/Ea) | 1
+Acidic hydrolysis of ethyl acetate is a classic example of which order? | First order | Second order | Pseudo-first order | Zero order | 3
+If the initial concentration of reactant is doubled, the half-life of a zero-order reaction | is halved | is doubled | remains unchanged | becomes three times | 2
+The minimum extra energy required by reactant molecules to participate in a reaction is | Kinetic energy | Potential energy | Activation energy | Threshold energy | 3
+A plot of ln k vs 1/T according to Arrhenius equation yields a straight line with slope | -Ea / R | Ea / R | -Ea / 2.303R | Ea / 2.303R | 1
+For a reaction A + B -> C, doubling [A] quadruples the rate, but doubling [B] has no effect. The rate law is | Rate = k[A][B] | Rate = k[A]^2 | Rate = k[A][B]^2 | Rate = k[A]^2[B] | 2
+Natural and artificial radioactive decay of unstable nuclei always follows | Zero-order kinetics | First-order kinetics | Second-order kinetics | Third-order kinetics | 2
+If the concentration of the reactant in a second-order reaction is halved, the rate becomes | two times | four times | one-fourth | half | 3
+Threshold energy of a reaction is equal to | Activation energy + Average kinetic energy of reactants | Activation energy - Average kinetic energy of reactants | Activation energy only | Average kinetic energy only | 1
+Collision theory is highly successful and mainly applicable to | unimolecular reactions | bimolecular gaseous reactions | termolecular reactions | all of these | 2
+Photochemical reactions, such as the synthesis of HCl from H2 and Cl2 in sunlight, are of | zero order | first order | second order | third order | 1
+In a complex reaction consisting of multiple steps, the overall rate is determined by the | fastest step | slowest step | average of all steps | first step | 2
+The active mass of a substance is chemically equivalent to its | molar concentration | mass in grams | equivalent weight | normality | 1
+Which of the following factors does not alter the value of the rate constant (k) of a reaction? | Temperature | Catalyst | Concentration of reactants | Activation energy | 3
