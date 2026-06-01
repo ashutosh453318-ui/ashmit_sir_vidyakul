@@ -29,11 +29,11 @@ logger = logging.getLogger(__name__)
 # --- CONFIGURATION ---
 TOKEN = "8971763348:AAEk7xWP53wMowX4Kaok53ZRF7q6tZS5flo"
 OWNER_ID = 6527942155
-GYANENDRA_SIR_USERNAME = "ANISH2333" # Bina @ ke likhna hai
+GYANENDRA_SIR_USERNAME = "Sandilyamayank" # Bina @ ke likhna hai
 
 # --- GROUPS & MARKS SETTINGS ---
 PASSING_MARKS = 70
-TARGET_100_LINK = "https://t.me/current_affairs_live_quiz"
+TARGET_100_LINK = "https://t.me/+7pQr2uUgs2llMTc1"
 
 # Spam Words
 BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badword1", "badword2", "badword3", "join fast", "investment"]
@@ -52,7 +52,74 @@ COMPETITION_STATS = {}
 # --- RESTORE DATA LIST (To recover lost results) ---
 RESTORE_DATA = [
     ("Anjali Kumari", 98, 49, 1, 0, 1069.4),
-    ("Rituraj Raj", 92, 46, 4, 0, 1132.9)
+    ("Rituraj Raj", 92, 46, 4, 0, 1132.9),
+    ("Ankit Jha", 92, 46, 4, 0, 1161.1),
+    ("Santosh Kumar", 90, 45, 5, 0, 412.8),
+    ("Ayan", 90, 45, 4, 1, 793.6),
+    ("Anshu Kumar", 90, 45, 3, 2, 802.3),
+    ("Saniya Singh", 90, 45, 5, 0, 830.6),
+    ("Manish Yaduvanshi", 90, 45, 2, 3, 1196.0),
+    ("Prince Sharma", 90, 45, 4, 1, 1199.3),
+    ("Sippu Kumar", 88, 44, 5, 1, 816.7),
+    ("Supriya Kumari", 88, 44, 3, 3, 942.8),
+    ("Rinki Kumari", 88, 44, 5, 1, 1092.9),
+    ("Ayushi@AS", 86, 43, 6, 1, 1112.7),
+    ("Arjun Yadav", 84, 42, 2, 6, 893.7),
+    ("࿐🅰🅼🅸🆃𒆜࿐ Kumar࿐", 84, 42, 6, 2, 1184.9),
+    ("Rohit Raj", 82, 41, 9, 0, 746.9),
+    ("YASHWANT Kushwaha", 82, 41, 7, 2, 828.2),
+    ("Shalini Priya", 82, 41, 9, 0, 902.5),
+    ("Abhii", 82, 41, 9, 0, 1278.5),
+    ("Pallavi Kumari", 82, 41, 8, 1, 1448.6),
+    ("Anjali Mishra", 82, 41, 9, 0, 1496.3),
+    ("Riya Singh", 80, 40, 5, 5, 1107.6),
+    ("SwarnkarShubh98¿♤", 80, 40, 10, 0, 1118.8),
+    ("Md Albab", 80, 40, 7, 3, 1124.5),
+    ("Mr.Aniket", 80, 40, 10, 0, 1492.7),
+    ("Class12th Student", 78, 39, 11, 0, 652.4),
+    ("Shahnawaz Alam", 78, 39, 10, 1, 804.9),
+    ("Abhi yadav", 78, 39, 8, 3, 971.6),
+    ("Z", 78, 39, 11, 0, 1196.9),
+    ("➠✞𝆺𝅥⃝ᵛ͢ᵎᵖ≛⃝kash ⑅⃝king☜⃝", 78, 39, 10, 1, 1261.2),
+    ("Sonu Kumar", 76, 38, 11, 1, 801.6),
+    ("Rishu Kumar", 76, 38, 9, 3, 1453.8),
+    ("Deepak Yadav o7", 74, 37, 10, 3, 802.5),
+    ("Ravish das", 74, 37, 11, 2, 1166.1),
+    ("Mr_AñKûSh__", 74, 37, 11, 2, 1288.0),
+    ("Deepa kumari", 72, 36, 14, 0, 954.6),
+    ("Aditya Ray", 72, 36, 3, 11, 1731.4),
+    ("Yuvraj Kumar", 70, 35, 8, 7, 1019.8),
+    ("Adi Singh !!", 70, 35, 13, 2, 1131.6),
+    ("Arun Chaubey", 68, 34, 13, 3, 1261.5),
+    ("Shivam Yadav", 66, 33, 16, 1, 1293.7),
+    ("Aanya", 66, 33, 13, 4, 1310.4),
+    ("Kanhaiya Sharma", 66, 33, 17, 0, 1497.3),
+    ("Rahul Kumar", 64, 32, 2, 16, 772.4),
+    ("Shailesh", 64, 32, 18, 0, 1269.3),
+    ("Pihu Singh", 64, 32, 15, 3, 1436.8),
+    ("*_*VIVEK---SINGH*_*", 64, 32, 10, 8, 1555.2),
+    ("Bahura Sahu", 64, 32, 17, 1, 1573.0),
+    ("Jyoti", 62, 31, 16, 3, 1446.9),
+    ("Rinku Kumari", 60, 30, 19, 1, 1428.7),
+    ("Ujjwal bhardwaj", 58, 29, 13, 8, 1089.5),
+    ("Abhimanyu Kumar", 58, 29, 19, 2, 1474.3),
+    ("𝗦𝗨𝗡𝗗𝗥𝗔𝗠 𝗬𝗔𝗗𝗔𝗩", 56, 28, 21, 1, 634.7),
+    ("@455kavya", 56, 28, 16, 6, 865.4),
+    ("@Lalit Kumar", 56, 28, 18, 4, 887.9),
+    ("Muskan Rawat", 56, 28, 19, 3, 1267.7),
+    ("Gaurav Kumar", 54, 27, 8, 15, 486.5),
+    ("Manish yadav", 54, 27, 5, 18, 797.6),
+    ("Aatika Anjoom", 54, 27, 21, 2, 1368.2),
+    ("Rahul Kumar 2", 52, 26, 16, 8, 870.5), 
+    ("Riya Mishra", 52, 26, 19, 5, 1383.2),
+    ("Palak", 50, 25, 20, 5, 1222.3),
+    ("M..Thakur", 50, 25, 21, 4, 1238.6),
+    ("Jyoti sinha", 48, 24, 24, 2, 1359.9),
+    ("Balaghul Mobin Balaghul", 46, 23, 25, 2, 549.5),
+    ("Riya Thakur", 46, 23, 12, 15, 588.6),
+    ("Pooja Pooja", 46, 23, 16, 11, 1039.4),
+    ("Sejal Singh", 46, 23, 12, 15, 1089.3),
+    ("Aayush", 46, 23, 15, 12, 1230.4)
 ]
 
 # --- DUMMY WEB SERVER FOR RENDER ---
@@ -378,12 +445,18 @@ async def moderate_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if re.search(r"(https?://|t\.me/|www\.|bit\.ly|\.com|\.in|\.net)", text):
         try:
             await update.message.delete()
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"🚫 {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+            await asyncio.sleep(5)
+            await warning.delete()
         except: pass
         return
 
     if any(word in text for word in BANNED_WORDS):
         try:
             await update.message.delete()
+            warning = await context.bot.send_message(chat_id=chat.id, text=f"⚠️ {user.first_name}, spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge")
+            await asyncio.sleep(5)
+            await warning.delete()
         except: pass
 
 # --- CUSTOM QUIZ RUNNER ---
@@ -485,7 +558,8 @@ async def handle_poll_answer(update: Update, context: ContextTypes.DEFAULT_TYPE)
 # --- COMMANDS ---
 async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
         
     welcome_message = (
         "👋 Hello! Main <b>Santosh Devloper</b>, aapka Chemistry , aapko Ultimate Quiz Karaoonga.\n\n"
@@ -507,7 +581,8 @@ async def start_bot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
         
     chat_id = update.effective_chat.id
     conn = get_db_connection()
@@ -534,7 +609,8 @@ async def restore_lost_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def show_quiz_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
 
     chat_id = update.effective_chat.id
     if chat_id in QUIZ_TASKS:
@@ -590,12 +666,18 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         text=f"🎉 Congratulations {query.from_user.first_name}!\n\nAap 'Target 100' group ke liye eligible hain.\n🔗 <b>Join here:</b> {TARGET_100_LINK}",
                         parse_mode="HTML"
                     )
+                    await query.answer("✅ Aapko Private Message (Inbox) me link bhej diya gaya hai. Wahan se join karein!", show_alert=True)
                 except Exception:
-                    pass
+                    await query.answer("⚠️ Link bhejne me error! Pehle bot ko private me jaakar /start press karein, tabhi bot aapko link bhej payega.", show_alert=True)
+            else:
+                await query.answer("❌ Sorry you are not eligible. 70+ marks required.", show_alert=True)
+        else:
+            await query.answer("❌ Aapne is quiz me hissa nahi liya hai. Only participants allowed!", show_alert=True)
         return
 
-    # Authorized checks for other inline buttons (SILENTLY IGNORE UNAUTHORIZED)
+    # Authorized checks for other inline buttons
     if not await is_authorized(update, context):
+        await query.answer("🚫 Warning: spam mat karo ye sab bilkul tum nahi kar sakte ho only hm hi karenge", show_alert=True)
         return
     
     if data == "back_to_main":
@@ -636,14 +718,16 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def reset_question_number(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
     chat_id = update.effective_chat.id
     update_quiz_state(chat_id, 0)
     await update.message.reply_text("✅ Sequence reset to Question 1.")
 
 async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
     chat_id = update.effective_chat.id
     
     if chat_id in QUIZ_TASKS:
@@ -663,7 +747,8 @@ async def more_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
     chat_id = update.effective_chat.id
     
     if chat_id in QUIZ_TASKS:
@@ -683,7 +768,8 @@ async def resume_quiz(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
         
     chat_id = update.effective_chat.id
     _, file_name, _ = get_quiz_state(chat_id)
@@ -694,7 +780,8 @@ async def get_result_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
+        return
     chat_id = update.effective_chat.id
     
     if chat_id not in QUIZ_TASKS:
@@ -713,7 +800,7 @@ async def stop_now(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def unknown_command_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_authorized(update, context):
-        return  # SILENTLY IGNORE UNAUTHORIZED USERS
+        await send_temp_warning(update, context)
 
 async def setup_commands(application: Application):
     try:
