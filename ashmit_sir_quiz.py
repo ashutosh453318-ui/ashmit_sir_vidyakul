@@ -102,7 +102,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS quiz_state (
             chat_id INTEGER PRIMARY KEY,
             current_index INTEGER DEFAULT 0,
-            subject TEXT DEFAULT 'quiz.txt'
+            subject TEXT DEFAULT 'math_quiz.txt'
         )
     """)
     conn.commit()
@@ -115,7 +115,7 @@ def get_quiz_state(chat_id):
     result = cursor.fetchone()
     conn.close()
     if result: return result[0], result[1]
-    return 0, 'quiz.txt'
+    return 0, 'math_quiz.txt'
 
 def update_quiz_state(chat_id, new_index, subject=None):
     conn = get_db_connection()
@@ -466,7 +466,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # CASE 3: CHAPTER SELECTED (START THE QUIZ)
     if data.startswith("play_"):
-        file_name = data.split("play_")[1] # e.g., 'quiz.txt'
+        file_name = data.split("play_")[1] # e.g., 'math_quiz.txt'
         display_sub = file_name.replace(".txt", "").replace("_", " ").title()
         
         reset_scores(chat_id)
