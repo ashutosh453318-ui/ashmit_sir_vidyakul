@@ -38,7 +38,7 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 # Yahan se aap kitne bhi chapters add kar sakte hain
 QUIZ_STRUCTURE = {
     "Math": {
-        "Test": "quiz.txt",
+        "Test": "math_quiz.txt",
     }
 }
 
