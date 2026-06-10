@@ -41,7 +41,7 @@ BANNED_WORDS = ["scam", "fraud", "casino", "illegal", "bitcoin", "gali", "badwor
 # --- QUIZ FOLDERS & FILES HIERARCHY ---
 QUIZ_STRUCTURE = {
     "Math": {
-        "Test": "quiz.txt",
+        "Test": "math_quiz.txt",
     }
 }
 
